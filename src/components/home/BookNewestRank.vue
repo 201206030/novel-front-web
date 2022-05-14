@@ -46,7 +46,7 @@
 import { reactive, toRefs, onMounted } from "vue";
 import { listNewestRankBooks } from "@/api/book";
 export default {
-  name: "HomeBookNewestRank",
+  name: "BookNewestRank",
   setup() {
     const state = reactive({
       books: [],

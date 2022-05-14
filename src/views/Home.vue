@@ -152,7 +152,7 @@
           </div>
         </div>
       </div>
-      <HomeBookVisitRank/>
+      <BookVisitRank/>
     </div>
     <div class="channelWrap channelPic cf">
       <div class="leftBox">
@@ -186,11 +186,11 @@
           </div>
         </div>
       </div>
-      <HomeBookNewestRank/>
+      <BookNewestRank/>
       
     </div>
 
-    <HomeBookUpdateRank/>
+    <BookUpdateRank/>
     
   </div>
   <FriendLink/>
@@ -222,21 +222,21 @@
 import { reactive, toRefs, onMounted } from "vue";
 import { listHomeBooks } from "@/api/home";
 import { ElMessage, ElLoading } from "element-plus";
-import Header from "@/components/Header";
-import LatestNews from "@/components/LatestNews"
-import FriendLink from "@/components/FriendLink"
-import HomeBookVisitRank from "@/components/HomeBookVisitRank"
-import HomeBookNewestRank from "@/components/HomeBookNewestRank"
-import HomeBookUpdateRank from "@/components/HomeBookUpdateRank"
+import Header from "@/components/common/Header";
+import LatestNews from "@/components/home/LatestNews"
+import FriendLink from "@/components/home/FriendLink"
+import BookVisitRank from "@/components/home/BookVisitRank"
+import BookNewestRank from "@/components/home/BookNewestRank"
+import BookUpdateRank from "@/components/home/BookUpdateRank"
 export default {
   name: "home",
   components: {
     Header,
     LatestNews,
     FriendLink,
-    HomeBookVisitRank,
-    HomeBookNewestRank,
-    HomeBookUpdateRank
+    BookVisitRank,
+    BookNewestRank,
+    BookUpdateRank
   },
   setup() {
     const state = reactive({
