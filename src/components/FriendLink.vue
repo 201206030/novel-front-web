@@ -15,7 +15,6 @@
 
 <script>
 import { reactive, toRefs, onMounted } from "vue";
-import { ElMessage, ElLoading } from "element-plus";
 import { listHomeFriendLinks } from "@/api/home";
 export default {
   name: "FriendLink",
@@ -25,13 +24,7 @@ export default {
     });
 
     onMounted(async () => {
-      const loadingInstance = ElLoading.service({
-        target: "#indexNews",
-        text: "加载中。。。",
-      });
       const { data } = await listHomeFriendLinks();
-      loadingInstance.close();
-
       state.friendLinks = data;
     });
 
