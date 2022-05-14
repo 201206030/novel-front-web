@@ -12,7 +12,7 @@
             >
               <router-link :to="{ name: 'book', query: { id: item.bookId } }">
                 <img
-                  :src="`${imgBaseUrl}`+`${item.picUrl}`"
+                  :src="`${imgBaseUrl}` + `${item.picUrl}`"
                   :alt="item.bookName"
                   onerror="this.src='https://cdn.jsdelivr.net/gh/201206030/CDN/images/default.gif';this.onerror=null"
                 />
@@ -27,7 +27,7 @@
                 :class="{ on: index == 0 }"
               >
                 <img
-                  :src="`${imgBaseUrl}`+`${item.picUrl}`"
+                  :src="`${imgBaseUrl}` + `${item.picUrl}`"
                   :alt="item.bookName"
                   onerror="this.src='https://cdn.jsdelivr.net/gh/201206030/CDN/images/default.gif';this.onerror=null"
                 />
@@ -83,20 +83,7 @@
             </dd>
           </dl>
 
-          <dl class="hot_notice" id="indexNews">
-            <dd style="text-align: left">
-              <span>[资讯]</span
-              ><a href="/about/newsInfo-5.html"
-                >AI小说悄然流行：人类特有的创作力，已经被AI复制？</a
-              >
-            </dd>
-            <dd style="text-align: left">
-              <span>[行业]</span
-              ><a href="/about/newsInfo-4.html"
-                >阅文推“单本可选新合同”：授权分级、免费或付费自选</a
-              >
-            </dd>
-          </dl>
+          <LatestNews/>
         </div>
       </div>
       <div class="rightBox">
@@ -120,7 +107,7 @@
                 <div class="cover">
                   <a href="/book/1334317855974465536.html"
                     ><img
-                      :src="`${imgBaseUrl}`+`${item.picUrl}`"
+                      :src="`${imgBaseUrl}` + `${item.picUrl}`"
                       :alt="item.bookName"
                       onerror="this.src='https://cdn.jsdelivr.net/gh/201206030/CDN/images/default.gif';this.onerror=null"
                   /></a>
@@ -141,27 +128,30 @@
           <h2 class="on">热门推荐</h2>
         </div>
         <div class="picRecommend cf" id="hotRecBooks">
-          <div class="itemsList" v-for="(item, index) in hotRecommend" :key="index">
+          <div
+            class="itemsList"
+            v-for="(item, index) in hotRecommend"
+            :key="index"
+          >
             <a class="items_img" href="/book/1338432467551432705.html">
               <img
-                :src="`${imgBaseUrl}`+`${item.picUrl}`"
+                :src="`${imgBaseUrl}` + `${item.picUrl}`"
                 onerror="this.src='https://cdn.jsdelivr.net/gh/201206030/CDN/images/default.gif';this.onerror=null"
                 :alt="item.bookName"
               />
             </a>
             <div class="items_txt">
-              <h4><a href="/book/1338432467551432705.html">{{item.bookName}}</a></h4>
+              <h4>
+                <a href="/book/1338432467551432705.html">{{ item.bookName }}</a>
+              </h4>
               <p class="author">
-                <a href="javascript:void(0)">作者：{{item.authorName}}</a>
+                <a href="javascript:void(0)">作者：{{ item.authorName }}</a>
               </p>
               <p class="intro">
-                <a href="/book/1338432467551432705.html"
-                  >{{item.bookDesc}}</a
-                >
+                <a href="/book/1338432467551432705.html">{{ item.bookDesc }}</a>
               </p>
             </div>
           </div>
-         
         </div>
       </div>
       <div id="bookrank1_ShowBookRank">
@@ -346,31 +336,31 @@
         <div class="title">
           <h2>精品推荐</h2>
         </div>
-        
+
         <div class="picRecommend cf" id="classicBooks">
-          <div class="itemsList" v-for="(item, index) in goodRecommend" :key="index" >
+          <div
+            class="itemsList"
+            v-for="(item, index) in goodRecommend"
+            :key="index"
+          >
             <a class="items_img" href="/book/1334327477657501696.html">
               <img
-                :src="`${imgBaseUrl}`+`${item.picUrl}`"
+                :src="`${imgBaseUrl}` + `${item.picUrl}`"
                 onerror="this.src='https://cdn.jsdelivr.net/gh/201206030/CDN/images/default.gif';this.onerror=null"
               />
             </a>
             <div class="items_txt">
               <h4>
-                <a href="/book/1334327477657501696.html">{{item.bookName}}</a>
+                <a href="/book/1334327477657501696.html">{{ item.bookName }}</a>
               </h4>
               <p class="author">
-                <a href="javascript:void(0)">作者：{{item.authorName}}</a>
+                <a href="javascript:void(0)">作者：{{ item.authorName }}</a>
               </p>
               <p class="intro">
-                <a href="/book/1334327477657501696.html"
-                  >{{item.bookDesc}}</a
-                >
+                <a href="/book/1334327477657501696.html">{{ item.bookDesc }}</a>
               </p>
             </div>
           </div>
-          
-         
         </div>
       </div>
       <div id="bookrank2_ShowBookRank">
@@ -1198,10 +1188,12 @@ import { reactive, toRefs, onMounted } from "vue";
 import { listHomeBooks } from "@/api/home";
 import { ElMessage, ElLoading } from "element-plus";
 import Header from "@/components/Header";
+import LatestNews from "@/components/LatestNews"
 export default {
   name: "home",
   components: {
     Header,
+    LatestNews
   },
   setup() {
     const state = reactive({
@@ -1215,7 +1207,7 @@ export default {
       hotRecommend: [],
       // 精品推荐
       goodRecommend: [],
-      imgBaseUrl: process.env.VUE_APP_BASE_IMG_URL
+      imgBaseUrl: process.env.VUE_APP_BASE_IMG_URL,
     });
 
     onMounted(async () => {
@@ -1297,8 +1289,7 @@ export default {
     });
 
     return {
-      ...toRefs(state)
-      
+      ...toRefs(state),
     };
   },
 };
