@@ -1151,14 +1151,7 @@
       </div>
     </div>
   </div>
-  <div class="friend_link">
-    <div class="box_center cf" id="friendLink">
-      <span>友情链接：</span>
-      <a target="_blank" href="https://www.xinshumen.com">小说精品屋</a
-      ><a target="_blank" href="http://video.java2nb.com/">小羊影视</a
-      ><a target="_blank" href="http://bbs.java2nb.com">官方论坛</a>
-    </div>
-  </div>
+  <FriendLink/>
 
   <div class="footer">
     <div class="box_center cf">
@@ -1189,11 +1182,13 @@ import { listHomeBooks } from "@/api/home";
 import { ElMessage, ElLoading } from "element-plus";
 import Header from "@/components/Header";
 import LatestNews from "@/components/LatestNews"
+import FriendLink from "@/components/FriendLink"
 export default {
   name: "home",
   components: {
     Header,
-    LatestNews
+    LatestNews,
+    FriendLink
   },
   setup() {
     const state = reactive({
