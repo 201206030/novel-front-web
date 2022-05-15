@@ -6,7 +6,10 @@
     <div class="readBody cf">
       <div class="readMain cf">
         <div class="read_menu">
-          <div class="menu_left" style="background-color: rgba(255, 255, 255,.45);">
+          <div
+            class="menu_left"
+            style="background-color: rgba(255, 255, 255, 0.45)"
+          >
             <ul>
               <li>
                 <a
@@ -17,7 +20,7 @@
                   <b>目录</b></a
                 >
               </li>
-             
+
               <li>
                 <a
                   class="ico_page"
@@ -26,7 +29,7 @@
                   ><b>书页</b></a
                 >
               </li>
-               <!--
+              <!--
               <li class="li_shelf" id="cFavs">
                 <a
                   class="ico_shelf"
@@ -83,19 +86,41 @@
         <div class="readWrap">
           <div class="bookNav">
             <a href="/">首页 </a>&gt;
-            <a href="/book/bookclass.html?c=6" v-if="data.bookInfo">{{data.bookInfo.categoryName}}</a>&gt;
-            <a href="javascript:void(0)" v-if="data.bookInfo" @click="bookDetail(data.chapterInfo.bookId)">{{data.bookInfo.bookName}}</a>
+            <a href="/book/bookclass.html?c=6" v-if="data.bookInfo">{{
+              data.bookInfo.categoryName
+            }}</a
+            >&gt;
+            <a
+              href="javascript:void(0)"
+              v-if="data.bookInfo"
+              @click="bookDetail(data.chapterInfo.bookId)"
+              >{{ data.bookInfo.bookName }}</a
+            >
           </div>
           <div id="readcontent">
-            <div class="textbox cf" style="background-color: rgba(255, 255, 255,.45);">
+            <div
+              class="textbox cf"
+              style="background-color: rgba(255, 255, 255, 0.45)"
+            >
               <div class="book_title">
-                <h1 v-if="data.chapterInfo">{{data.chapterInfo.chapterName}}</h1>
+                <h1 v-if="data.chapterInfo">
+                  {{ data.chapterInfo.chapterName }}
+                </h1>
                 <div class="textinfo">
-                  类别：<a href="/book/bookclass.html?c=6" v-if="data.bookInfo">{{data.bookInfo.categoryName}}</a> 作者：<a
+                  类别：<a
+                    href="/book/bookclass.html?c=6"
+                    v-if="data.bookInfo"
+                    >{{ data.bookInfo.categoryName }}</a
+                  >
+                  作者：<a
                     href="javascript:searchByK('最终马甲')"
-                    v-if="data.bookInfo">{{data.bookInfo.authorName}}</a
-                  ><span v-if="data.chapterInfo">字数：{{data.chapterInfo.chapterWordCount}}</span
-                  ><span v-if="data.chapterInfo">更新时间：{{data.chapterInfo.chapterUpdateTime}}</span>
+                    v-if="data.bookInfo"
+                    >{{ data.bookInfo.authorName }}</a
+                  ><span v-if="data.chapterInfo"
+                    >字数：{{ data.chapterInfo.chapterWordCount }}</span
+                  ><span v-if="data.chapterInfo"
+                    >更新时间：{{ data.chapterInfo.chapterUpdateTime }}</span
+                  >
                 </div>
               </div>
 
@@ -104,23 +129,30 @@
                   id="showReading"
                   class="readBox"
                   style="font-size: 16px; font-family: microsoft yahei"
-                v-html="data.bookContent">
-                </div>
+                  v-html="data.bookContent"
+                ></div>
               </div>
             </div>
           </div>
           <div class="nextPageBox">
-            <a style="background-color: rgba(255, 255, 255,.45);"
+            <a
+              style="background-color: rgba(255, 255, 255, 0.45)"
               class="prev"
-              href="javascript:enterPreIndexPage('1334332598936240128','0');"
+              href="javascript:void(0)"
+              @click="preChapter(data.chapterInfo.bookId)"
               >上一章</a
             >
-            <a style="background-color: rgba(255, 255, 255,.45);" class="dir" href="/book/indexList-1334332598936240128.html"
+            <a
+              style="background-color: rgba(255, 255, 255, 0.45)"
+              class="dir"
+              href="/book/indexList-1334332598936240128.html"
               >目录</a
             >
-            <a style="background-color: rgba(255, 255, 255,.45);"
+            <a
+              style="background-color: rgba(255, 255, 255, 0.45)"
               class="next"
-              href="javascript:enterNextIndexPage('1334332598936240128','1334332601092112384');"
+              @click="nextChapter(data.chapterInfo.bookId)"
+              href="javascript:void(0)"
               >下一章</a
             >
           </div>
@@ -239,16 +271,15 @@
       </div>
     </div>
   </div>
-
-  
 </template>
 
 <script>
 import "@/assets/styles/book.css";
-import "@/assets/styles/read.css"
+import "@/assets/styles/read.css";
 import { reactive, toRefs, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import {getBookContent } from "@/api/book";
+import { getBookContent, getPreChapterId, getNextChapterId } from "@/api/book";
+import { ElMessage } from "element-plus";
 import Top from "@/components/common/Top";
 import Footer from "@/components/common/Footer";
 export default {
@@ -260,31 +291,50 @@ export default {
   setup() {
     const route = useRoute();
     const router = useRouter();
-
-    const chapterId = route.params.chapterId;
     const state = reactive({
       data: {},
       imgBaseUrl: process.env.VUE_APP_BASE_IMG_URL,
     });
-    onMounted(async () => {
-
-      const {data} =  await getBookContent(chapterId);
-      state.data = data;
-      
+    onMounted(() => {
+      init(route.params.chapterId);
     });
 
-     const bookDetail = (bookId) => {
+    const bookDetail = (bookId) => {
       router.push({ path: `/book/${bookId}` });
+    };
+
+    const preChapter = async (bookId) => {
+      const { data } = await getPreChapterId(route.params.chapterId);
+      if (data) {
+        router.push({ path: `/book/${bookId}/${data}` });
+        init(data);
+      }else{
+        ElMessage.warning("已经是第一章了！")
+      }
+    };
+
+    const nextChapter = async (bookId) => {
+      const { data } = await getNextChapterId(route.params.chapterId);
+      if (data) {
+        router.push({ path: `/book/${bookId}/${data}` });
+        init(data);
+      }else{
+        ElMessage.warning("已经是最后一章了！")
+      }
+    };
+
+    const init = async (chapterId) => {
+      const { data } = await getBookContent(chapterId);
+      state.data = data;
     };
 
     return {
       ...toRefs(state),
-      bookDetail
-      
+      bookDetail,
+      preChapter,
+      nextChapter
     };
   },
-  mounted() {
-    
-  }
+  mounted() {},
 };
 </script>
