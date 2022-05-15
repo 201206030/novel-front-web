@@ -261,7 +261,7 @@
 import "@/assets/styles/book.css";
 import { reactive, toRefs, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { getBookById,getLastChapterAbout,listRecBooks } from "@/api/book";
+import { getBookById,addVisitCount,getLastChapterAbout,listRecBooks } from "@/api/book";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import author_head from "@/assets/images/author_head.png";
@@ -292,6 +292,7 @@ export default {
     const loadBook = async (bookId) => {
       const { data } = await getBookById(bookId);
       state.book = data;
+      addBookVisit(bookId)
     };
 
     const loadRecBooks = async (bookId) => {
@@ -314,6 +315,10 @@ export default {
       loadRecBooks(bookId)
       loadLastChapterAbout(bookId)
     };
+
+    const addBookVisit = async (bookId) => {
+      addVisitCount({bookId: bookId})
+    }
 
     return {
       ...toRefs(state),

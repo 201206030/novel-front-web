@@ -4,6 +4,11 @@ export function getBookById(bookId) {
     return request.get(`/book/${bookId}`);
 }
 
+export function addVisitCount(params) {
+    return request.post('/book/visit', params);
+}
+
+
 export function getLastChapterAbout(params) {
     return request.get('/book/lastChapterAbout', { params });
 }
