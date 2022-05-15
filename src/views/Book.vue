@@ -84,7 +84,7 @@
                     >({{ chapterAbout.chapterTotal }}章)</span
                   >
                 </div>
-                <a class="fr" href="/book/indexList-1431636283466297344.html"
+                <a class="fr" @click="chapterList(book.id)" href="javascript:void(0)"
                   >全部目录</a
                 >
               </div>
@@ -316,6 +316,10 @@ export default {
       loadLastChapterAbout(bookId)
     };
 
+    const chapterList = (bookId) => {
+      router.push({ path: `/chapterList/${bookId}` });
+    };
+
     const addBookVisit = async (bookId) => {
       addVisitCount({bookId: bookId})
     }
@@ -326,6 +330,7 @@ export default {
       no_comment,
       bookContent,
       bookDetail,
+      chapterList
     };
   },
   mounted() {

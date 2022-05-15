@@ -16,6 +16,10 @@ export function listRecBooks(params) {
     return request.get('/book/recList', { params });
 }
 
+export function listChapters(params) {
+    return request.get('/book/chapterList', { params });
+}
+
 export function getBookContent(chapterId) {
     return request.get(`/book/content/${chapterId}`);
 }

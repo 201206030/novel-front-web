@@ -13,8 +13,8 @@
             <ul>
               <li>
                 <a
-                  class="ico_catalog"
-                  href="/book/indexList-1334332598936240128.html"
+                  class="ico_catalog" @click="chapterList(data.chapterInfo.bookId)"
+                  href="javascript:void(0)"
                   title="目录"
                 >
                   <b>目录</b></a
@@ -24,7 +24,8 @@
               <li>
                 <a
                   class="ico_page"
-                  href="/book/1334332598936240128.html"
+                  @click="bookDetail(data.chapterInfo.bookId)"
+                  href="javascript:void(0)"
                   title="返回书页"
                   ><b>书页</b></a
                 >
@@ -145,7 +146,8 @@
             <a
               style="background-color: rgba(255, 255, 255, 0.45)"
               class="dir"
-              href="/book/indexList-1334332598936240128.html"
+              @click="chapterList(data.chapterInfo.bookId)"
+                  href="javascript:void(0)"
               >目录</a
             >
             <a
@@ -303,6 +305,11 @@ export default {
       router.push({ path: `/book/${bookId}` });
     };
 
+    const chapterList = (bookId) => {
+      router.push({ path: `/chapterList/${bookId}` });
+    };
+
+
     const preChapter = async (bookId) => {
       const { data } = await getPreChapterId(route.params.chapterId);
       if (data) {
@@ -331,6 +338,7 @@ export default {
     return {
       ...toRefs(state),
       bookDetail,
+      chapterList,
       preChapter,
       nextChapter
     };
