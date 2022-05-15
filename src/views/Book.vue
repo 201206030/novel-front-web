@@ -63,36 +63,8 @@
       <!--left start-->
       <div class="wrap_left fl">
         <div class="wrap_bg">
-          <!--章节目录 start-->
-          <div class="pad20_nobt">
-            <div class="bookChapter">
-              <div class="book_tit">
-                <div class="fl">
-                  <h3>最新章节</h3>
-                  <span id="bookIndexCount">(430章)</span>
-                </div>
-                <a class="fr" href="/book/indexList-1431636283466297344.html"
-                  >全部目录</a
-                >
-              </div>
-              <ul class="list cf">
-                <li>
-                  <span class="fl font16">
-                    <a href="/book/1431636283466297344/1460619921151021056.html"
-                      >章一百三十四 【一更】</a
-                    ></span
-                  >
-                  <span class="black9 fr">更新时间：21/11/16 00:00:00</span>
-                </li>
-                <li class="zj_yl" id="lastBookContent">
-                  <!--go-->
-                  　　只见一只拥有四条尾巴的火狐，正在不远处龇牙...
-                </li>
-                <!--此处是该章节预览，截取最前面的42个字-->
-              </ul>
-            </div>
-          </div>
-          <!--章节目录 end-->
+          <LastChapterAbout/>
+          
 
           <!--作品评论区 start-->
           <div class="pad20">
@@ -280,6 +252,7 @@ import { getBookById } from "@/api/book";
 import { ElMessage, ElLoading } from "element-plus";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
+import LastChapterAbout from "@/components/book/LastChapterAbout.vue"
 import author_head from "@/assets/images/author_head.png";
 import no_comment from "@/assets/images/no_comment.png";
 export default {
@@ -287,6 +260,7 @@ export default {
   components: {
     Header,
     Footer,
+    LastChapterAbout
   },
   setup() {
     const route = useRoute();

@@ -83,19 +83,19 @@
         <div class="readWrap">
           <div class="bookNav">
             <a href="/">首页 </a>&gt;
-            <a href="/book/bookclass.html?c=6">{{bookContent.categoryName}}</a>&gt;
-            <a href="javascript:void(0)" @click="bookDetail(bookContent.bookId)">{{bookContent.bookName}}</a>
+            <a href="/book/bookclass.html?c=6" v-if="data.bookInfo">{{data.bookInfo.categoryName}}</a>&gt;
+            <a href="javascript:void(0)" v-if="data.bookInfo" @click="bookDetail(data.chapterInfo.bookId)">{{data.bookInfo.bookName}}</a>
           </div>
           <div id="readcontent">
             <div class="textbox cf" style="background-color: rgba(255, 255, 255,.45);">
               <div class="book_title">
-                <h1>{{bookContent.chapterName}}</h1>
+                <h1 v-if="data.chapterInfo">{{data.chapterInfo.chapterName}}</h1>
                 <div class="textinfo">
-                  类别：<a href="/book/bookclass.html?c=6">{{bookContent.categoryName}}</a> 作者：<a
+                  类别：<a href="/book/bookclass.html?c=6" v-if="data.bookInfo">{{data.bookInfo.categoryName}}</a> 作者：<a
                     href="javascript:searchByK('最终马甲')"
-                    >{{bookContent.authorName}}</a
-                  ><span>字数：{{bookContent.chapterWordCount}}</span
-                  ><span>更新时间：{{bookContent.chapterUpdateTime}}</span>
+                    v-if="data.bookInfo">{{data.bookInfo.authorName}}</a
+                  ><span v-if="data.chapterInfo">字数：{{data.chapterInfo.chapterWordCount}}</span
+                  ><span v-if="data.chapterInfo">更新时间：{{data.chapterInfo.chapterUpdateTime}}</span>
                 </div>
               </div>
 
@@ -104,7 +104,7 @@
                   id="showReading"
                   class="readBox"
                   style="font-size: 16px; font-family: microsoft yahei"
-                v-html="bookContent.content">
+                v-html="data.bookContent">
                 </div>
               </div>
             </div>
@@ -266,13 +266,13 @@ export default {
 
     const chapterId = route.params.chapterId;
     const state = reactive({
-      bookContent: {},
+      data: {},
       imgBaseUrl: process.env.VUE_APP_BASE_IMG_URL,
     });
     onMounted(async () => {
 
       const {data} =  await getBookContent(chapterId);
-      state.bookContent = data;
+      state.data = data;
       
     });
 

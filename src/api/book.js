@@ -4,6 +4,10 @@ export function getBookById(bookId) {
     return request.get(`/book/${bookId}`);
 }
 
+export function getLastChapterAbout(params) {
+    return request.get('/book/lastChapterAbout', { params });
+}
+
 export function getBookContent(chapterId) {
     return request.get(`/book/content/${chapterId}`);
 }
