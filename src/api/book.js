@@ -1,7 +1,11 @@
 import request from '../utils/request'
 
-export function getById(bookId) {
+export function getBookById(bookId) {
     return request.get(`/book/${bookId}`);
+}
+
+export function getBookContent(chapterId) {
+    return request.get(`/book/content/${chapterId}`);
 }
 
 export function listVisitRankBooks() {

@@ -25,6 +25,12 @@ const router = createRouter({
       name: 'book',
       component: () => import('@/views/Book')
 	   
+    },
+    {
+      path: '/book/:id/:chapterId',
+      name: 'bookContent',
+      component: () => import('@/views/BookContent')
+	   
     }
   ]
 })

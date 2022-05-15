@@ -40,8 +40,9 @@
             >
           </div>
           <div class="btns" id="optBtn">
-            <a
-              href="/book/1431636283466297344/1431636286083543040.html"
+            
+            <a href="javascript:void(0)" @click="bookContent(book.id,book.firstChapterId)"
+              
               class="btn_ora"
               >点击阅读</a
             >
@@ -275,7 +276,7 @@
 import "@/assets/styles/book.css";
 import { reactive, toRefs, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { getById } from "@/api/book";
+import { getBookById } from "@/api/book";
 import { ElMessage, ElLoading } from "element-plus";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
@@ -297,14 +298,19 @@ export default {
     });
     const bookId = route.params.id;
     onMounted(async () => {
-      const { data } = await getById(bookId)
+      const { data } = await getBookById(bookId)
       state.book = data
     });
+
+    const bookContent = (bookId,chapterId) => {
+      router.push({ path: `/book/${bookId}/${chapterId}` });
+    };
 
     return {
       ...toRefs(state),
       author_head,
       no_comment,
+      bookContent
     };
   },
   mounted() {
