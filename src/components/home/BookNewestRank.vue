@@ -13,13 +13,16 @@
           >
             <div class="book_name">
               <i>{{ index + 1 }}</i
-              ><a class="name" href="/book/1334317855974465536.html">{{
-                item.bookName
-              }}</a>
+              ><a
+                class="name"
+                href="javascript:void(0)"
+                @click="bookDetail(item.id)"
+                >{{ item.bookName }}</a
+              >
             </div>
             <div class="book_intro">
               <div class="cover">
-                <a href="/book/1334317855974465536.html"
+                <a href="javascript:void(0)" @click="bookDetail(item.id)"
                   ><img
                     :src="`${imgBaseUrl}` + `${item.picUrl}`"
                     :alt="item.bookName"
@@ -28,7 +31,8 @@
               </div>
               <a
                 class="txt"
-                href="/book/1334317855974465536.html"
+                href="javascript:void(0)"
+                @click="bookDetail(item.id)"
                 v-html="item.bookDesc"
               ></a>
             </div>
@@ -44,10 +48,13 @@
 
 <script>
 import { reactive, toRefs, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import { listNewestRankBooks } from "@/api/book";
 export default {
   name: "BookNewestRank",
   setup() {
+    const route = useRoute();
+    const router = useRouter();
     const state = reactive({
       books: [],
       imgBaseUrl: process.env.VUE_APP_BASE_IMG_URL,
@@ -62,9 +69,12 @@ export default {
         }
       });
     });
-
+    const bookDetail = (bookId) => {
+      router.push({ path: `/book/${bookId}` });
+    };
     return {
       ...toRefs(state),
+      bookDetail,
     };
   },
 };

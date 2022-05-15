@@ -1,5 +1,4 @@
 @charset "utf-8";
-.Interaction_tab a, .Interaction_tab a .icon, .Interaction_tab a.fr .icon, .dashang_bar .l_bar .list li, .btn_pc, .btn_flw, .fansBox .fans_bg, .icon_hg { background: url(../images/icon_interation.png) no-repeat }
 .InteractionBox { padding: 15px 14px 11px }
 .Interaction_tab a { width: 339px; height: 60px; line-height: 60px; font-size: 14px; color: #000 }
 /*.Interaction_tab a:hover, .Interaction_tab a.on { background-position: 0 -60px; color: #000 }*/
@@ -16,7 +15,6 @@
 .dashang_bar .l_bar .list li { width: 90px; height: 134px; line-height: 1; float: left; margin: 0 20px 0 6px; text-align: center; background-position: 0 -130px }
 .dashang_bar .l_bar .list li img { width: 60px; height: 60px; background: #fff; margin: 35px 15px 10px; border-radius: 50%; box-shadow: 0 1px 0 rgba(0,0,0,.3) }
 .dashang_bar .l_bar .list li .user_name { line-height: 1!important; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; display: block; padding: 0 10px }
-.dashang_bar .l_bar .list .li_1 { }
 .dashang_bar .l_bar .list .li_2 { background-position: -100px -130px }
 .dashang_bar .l_bar .list .li_3 { background-position: -200px -130px; margin-right: 0 }
 .InteractionBox .r_bar .tit { padding: 14px 1px 12px 1px }

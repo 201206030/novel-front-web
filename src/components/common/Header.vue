@@ -1,34 +1,9 @@
  <template>
   <div class="header">
-    <div class="topBar" style="display: none">
-      <div class="box_center cf">
-        <div class="top_l">
-          <a href="/" class="on">小说精品屋</a><i class="line">|</i
-          ><a href="/?m=2">手机女生版</a><i class="line">|</i
-          ><a href="/?m=1">手机男生版</a><i class="line">|</i
-          ><a href="/">客户端下载</a>
-        </div>
-        <div class="top_r">
-          <div class="top_nearread">
-            <a
-              href="javascript:void(0);"
-              class="nearread"
-              id="headerUserHistoryBtn"
-              >最近阅读<i class="icon_down"></i
-            ></a>
-            <div
-              class="book_record"
-              style="display: none"
-              id="headerUserHistory"
-            ></div>
-          </div>
-          <span> </span>
-        </div>
-      </div>
-    </div>
+   
     <div class="topMain">
       <div class="box_center cf">
-        <a href="/?m=2" class="logo fl"><img :src="logo" alt="小说精品屋" /></a>
+        <a href="/" class="logo fl"><img :src="logo" alt="小说精品屋" /></a>
         <div class="searchBar fl">
           <div class="search cf">
             <input

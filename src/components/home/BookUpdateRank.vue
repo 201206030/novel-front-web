@@ -18,13 +18,13 @@
           <tbody id="newRankBooks2">
             <tr v-for="(item, index) in booksList" :key="index">
               <td class="style">
-                <a href="book/bookclass.html?c=1">[{{ item.categoryName }}]</a>
+                <a href="javascript:void(0)" @click="bookDetail(item.id)">[{{ item.categoryName }}]</a>
               </td>
               <td class="name">
-                <a href="/book/1334337530296893441.html">{{ item.bookName }}</a>
+                <a href="javascript:void(0)" @click="bookDetail(item.id)">{{ item.bookName }}</a>
               </td>
               <td class="chapter">
-                <a href="/book/1334337530296893441.html">{{
+                <a href="javascript:void(0)" @click="bookDetail(item.id)">{{
                   item.lastChapterName
                 }}</a>
                 <i class=""></i>
@@ -52,13 +52,13 @@
             >
               <div class="book_name">
                 <i>{{ index + 1 }}</i
-                ><a class="name" href="/book/1334317855974465536.html">{{
+                ><a class="name" href="javascript:void(0)" @click="bookDetail(item.id)">{{
                   item.bookName
                 }}</a>
               </div>
               <div class="book_intro">
                 <div class="cover">
-                  <a href="/book/1334317855974465536.html"
+                  <a href="javascript:void(0)" @click="bookDetail(item.id)"
                     ><img
                       :src="`${imgBaseUrl}` + `${item.picUrl}`"
                       :alt="item.bookName"
@@ -67,7 +67,7 @@
                 </div>
                 <a
                   class="txt"
-                  href="/book/1334317855974465536.html"
+                  href="javascript:void(0)" @click="bookDetail(item.id)"
                   v-html="item.bookDesc"
                 ></a>
               </div>
@@ -84,10 +84,13 @@
 
 <script>
 import { reactive, toRefs, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import { listUpdateRankBooks } from "@/api/book";
 export default {
   name: "BookUpdateRank",
   setup() {
+    const route = useRoute();
+    const router = useRouter();
     const state = reactive({
       booksRank: [],
       booksList: [],
@@ -104,8 +107,12 @@ export default {
       });
     });
 
+    const bookDetail = (bookId) => {
+      router.push({ path: `/book/${bookId}` });
+    };
     return {
       ...toRefs(state),
+      bookDetail,
     };
   },
 };

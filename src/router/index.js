@@ -21,9 +21,9 @@ const router = createRouter({
       component: () => import('@/views/Home')
     },
     {
-      path: '/home',
+      path: '/book/:id',
       name: 'book',
-      component: () => import('@/views/Home')
+      component: () => import('@/views/Book')
 	   
     }
   ]

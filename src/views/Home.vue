@@ -10,13 +10,13 @@
               :key="index"
               :class="{ on: index == 0 }"
             >
-              <router-link :to="{ name: 'book', query: { id: item.bookId } }">
+              <a href="javascript:void(0)" @click="bookDetail(item.bookId)">
                 <img
                   :src="`${imgBaseUrl}` + `${item.picUrl}`"
                   :alt="item.bookName"
                   onerror="this.src='https://cdn.jsdelivr.net/gh/201206030/CDN/images/default.gif';this.onerror=null"
                 />
-              </router-link>
+              </a>
             </dd>
           </dl>
           <div class="scSmallImg" id="carouseSmall">
@@ -38,52 +38,52 @@
         <div class="hot_articles">
           <dl class="hot_recommend" id="topBooks1">
             <dt>
-              <a href="/book/1334317855886385152.html" v-if="topBooks1[0]">{{
+              <a href="javascript:void(0)" @click="bookDetail(topBooks1[0].bookId)" v-if="topBooks1[0]">{{
                 topBooks1[0].bookName
               }}</a>
             </dt>
             <dd>
-              <a href="/book/1334335470709080064.html" v-if="topBooks1[1]">{{
+              <a href="javascript:void(0)" @click="bookDetail(topBooks1[1].bookId)" v-if="topBooks1[1]">{{
                 topBooks1[1].bookName
               }}</a
-              ><a href="/book/1334318497132552192.html" v-if="topBooks1[2]">{{
+              ><a href="javascript:void(0)" @click="bookDetail(topBooks1[2].bookId)" v-if="topBooks1[2]">{{
                 topBooks1[2].bookName
               }}</a>
             </dd>
             <dd>
-              <a href="/book/1334317902627708928.html" v-if="topBooks1[3]">{{
+              <a href="javascript:void(0)" @click="bookDetail(topBooks1[3].bookId)" v-if="topBooks1[3]">{{
                 topBooks1[3].bookName
               }}</a
-              ><a href="/book/1334321880899887104.html" v-if="topBooks1[4]">{{
+              ><a href="javascript:void(0)" @click="bookDetail(topBooks1[4].bookId)" v-if="topBooks1[4]">{{
                 topBooks1[4].bookName
               }}</a>
             </dd>
           </dl>
           <dl class="hot_recommend" id="topBooks2">
             <dt>
-              <a href="/book/1334318654997766144.html" v-if="topBooks1[5]">{{
+              <a href="javascript:void(0)" @click="bookDetail(topBooks1[5].bookId)" v-if="topBooks1[5]">{{
                 topBooks1[5].bookName
               }}</a>
             </dt>
             <dd>
-              <a href="/book/1334334734843609088.html" v-if="topBooks1[6]">{{
+              <a href="javascript:void(0)" @click="bookDetail(topBooks1[6].bookId)" v-if="topBooks1[6]">{{
                 topBooks1[6].bookName
               }}</a
-              ><a href="/book/1334317856465199104.html" v-if="topBooks1[7]">{{
+              ><a href="javascript:void(0)" @click="bookDetail(topBooks1[7].bookId)" v-if="topBooks1[7]">{{
                 topBooks1[7].bookName
               }}</a>
             </dd>
             <dd>
-              <a href="/book/1334317855869607936.html" v-if="topBooks1[8]">{{
+              <a href="javascript:void(0)" @click="bookDetail(topBooks1[8].bookId)" v-if="topBooks1[8]">{{
                 topBooks1[8].bookName
               }}</a
-              ><a href="/book/1334335471568912384.html" v-if="topBooks1[9]">{{
+              ><a href="javascript:void(0)" @click="bookDetail(topBooks1[9].bookId)" v-if="topBooks1[9]">{{
                 topBooks1[9].bookName
               }}</a>
             </dd>
           </dl>
 
-          <LatestNews/>
+          <LatestNews />
         </div>
       </div>
       <div class="rightBox">
@@ -99,20 +99,24 @@
             >
               <div class="book_name">
                 <i>{{ index + 1 }}</i
-                ><a class="name" href="/book/1334317855974465536.html">{{
+                ><a class="name" href="javascript:void(0)" @click="bookDetail(item.bookId)">{{
                   item.bookName
                 }}</a>
               </div>
               <div class="book_intro">
                 <div class="cover">
-                  <a href="/book/1334317855974465536.html"
+                  <a href="javascript:void(0)" @click="bookDetail(item.bookId)"
                     ><img
                       :src="`${imgBaseUrl}` + `${item.picUrl}`"
                       :alt="item.bookName"
                       onerror="this.src='https://cdn.jsdelivr.net/gh/201206030/CDN/images/default.gif';this.onerror=null"
                   /></a>
                 </div>
-                <a class="txt" href="/book/1334317855974465536.html" v-html="item.bookDesc"></a>
+                <a
+                  class="txt"
+                  href="javascript:void(0)" @click="bookDetail(item.bookId)"
+                  v-html="item.bookDesc"
+                ></a>
               </div>
             </li>
           </ul>
@@ -131,7 +135,7 @@
             v-for="(item, index) in hotRecommend"
             :key="index"
           >
-            <a class="items_img" href="/book/1338432467551432705.html">
+            <a class="items_img" href="javascript:void(0)" @click="bookDetail(item.bookId)">
               <img
                 :src="`${imgBaseUrl}` + `${item.picUrl}`"
                 onerror="this.src='https://cdn.jsdelivr.net/gh/201206030/CDN/images/default.gif';this.onerror=null"
@@ -140,19 +144,22 @@
             </a>
             <div class="items_txt">
               <h4>
-                <a href="/book/1338432467551432705.html">{{ item.bookName }}</a>
+                <a href="javascript:void(0)" @click="bookDetail(item.bookId)">{{ item.bookName }}</a>
               </h4>
               <p class="author">
                 <a href="javascript:void(0)">作者：{{ item.authorName }}</a>
               </p>
               <p class="intro">
-                <a href="/book/1338432467551432705.html" v-html="item.bookDesc"></a>
+                <a
+                  href="javascript:void(0)" @click="bookDetail(item.bookId)"
+                  v-html="item.bookDesc"
+                ></a>
               </p>
             </div>
           </div>
         </div>
       </div>
-      <BookVisitRank/>
+      <BookVisitRank />
     </div>
     <div class="channelWrap channelPic cf">
       <div class="leftBox">
@@ -166,7 +173,7 @@
             v-for="(item, index) in goodRecommend"
             :key="index"
           >
-            <a class="items_img" href="/book/1334327477657501696.html">
+            <a class="items_img" href="javascript:void(0)" @click="bookDetail(item.bookId)">
               <img
                 :src="`${imgBaseUrl}` + `${item.picUrl}`"
                 onerror="this.src='https://cdn.jsdelivr.net/gh/201206030/CDN/images/default.gif';this.onerror=null"
@@ -174,41 +181,43 @@
             </a>
             <div class="items_txt">
               <h4>
-                <a href="/book/1334327477657501696.html">{{ item.bookName }}</a>
+                <a href="javascript:void(0)" @click="bookDetail(item.bookId)">{{ item.bookName }}</a>
               </h4>
               <p class="author">
                 <a href="javascript:void(0)">作者：{{ item.authorName }}</a>
               </p>
               <p class="intro">
-                <a href="/book/1334327477657501696.html" v-html="item.bookDesc"></a>
+                <a
+                  href="javascript:void(0)" @click="bookDetail(item.bookId)"
+                  v-html="item.bookDesc"
+                ></a>
               </p>
             </div>
           </div>
         </div>
       </div>
-      <BookNewestRank/>
-      
+      <BookNewestRank />
     </div>
 
-    <BookUpdateRank/>
-    
+    <BookUpdateRank />
   </div>
-  <FriendLink/>
+  <FriendLink />
 
-  <Footer/>
+  <Footer />
 </template>
 
 <script>
 import { reactive, toRefs, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import { listHomeBooks } from "@/api/home";
 import { ElMessage, ElLoading } from "element-plus";
 import Header from "@/components/common/Header";
-import Footer from "@/components/common/Footer"
-import LatestNews from "@/components/home/LatestNews"
-import FriendLink from "@/components/home/FriendLink"
-import BookVisitRank from "@/components/home/BookVisitRank"
-import BookNewestRank from "@/components/home/BookNewestRank"
-import BookUpdateRank from "@/components/home/BookUpdateRank"
+import Footer from "@/components/common/Footer";
+import LatestNews from "@/components/home/LatestNews";
+import FriendLink from "@/components/home/FriendLink";
+import BookVisitRank from "@/components/home/BookVisitRank";
+import BookNewestRank from "@/components/home/BookNewestRank";
+import BookUpdateRank from "@/components/home/BookUpdateRank";
 export default {
   name: "home",
   components: {
@@ -218,9 +227,11 @@ export default {
     BookVisitRank,
     BookNewestRank,
     BookUpdateRank,
-    Footer
+    Footer,
   },
   setup() {
+    const route = useRoute();
+    const router = useRouter();
     const state = reactive({
       // 轮播图
       sliderContent: [],
@@ -313,9 +324,14 @@ export default {
       });
     });
 
+    const bookDetail = (bookId) => {
+      router.push({ path: `/book/${bookId}` });
+    };
+
     return {
       ...toRefs(state),
+      bookDetail,
     };
-  },
+  }
 };
 </script>

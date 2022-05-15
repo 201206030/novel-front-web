@@ -9,20 +9,20 @@
               <li v-for="(item,index) in books" :key="index" :class="['num' + (Number(`${index}`) + 1), { on: index == 0 }]">
                <div class="book_name">
                 <i>{{ index + 1 }}</i
-                ><a class="name" href="/book/1334317855974465536.html">{{
+                ><a class="name" href="javascript:void(0)" @click="bookDetail(item.id)">{{
                   item.bookName
                 }}</a>
               </div>
               <div class="book_intro">
                 <div class="cover">
-                  <a href="/book/1334317855974465536.html"
+                  <a href="javascript:void(0)" @click="bookDetail(item.id)"
                     ><img
                       :src="`${imgBaseUrl}` + `${item.picUrl}`"
                       :alt="item.bookName"
                       onerror="this.src='https://cdn.jsdelivr.net/gh/201206030/CDN/images/default.gif';this.onerror=null"
                   /></a>
                 </div>
-                <a class="txt" href="/book/1334317855974465536.html" v-html="item.bookDesc"></a>
+                <a class="txt" href="javascript:void(0)" @click="bookDetail(item.id)" v-html="item.bookDesc"></a>
               </div>
              
               </li>
@@ -38,10 +38,13 @@
 
 <script>
 import { reactive, toRefs, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import { listVisitRankBooks } from "@/api/book";
 export default {
   name: "BookVisitRank",
   setup() {
+    const route = useRoute();
+    const router = useRouter();
     const state = reactive({
       books: [],
       imgBaseUrl: process.env.VUE_APP_BASE_IMG_URL
@@ -61,8 +64,12 @@ export default {
       
     });
 
+    const bookDetail = (bookId) => {
+      router.push({ path: `/book/${bookId}` });
+    };
     return {
       ...toRefs(state),
+      bookDetail,
     };
   },
 };
