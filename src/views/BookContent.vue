@@ -249,11 +249,8 @@ import "@/assets/styles/read.css"
 import { reactive, toRefs, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import {getBookContent } from "@/api/book";
-import { ElMessage, ElLoading } from "element-plus";
 import Top from "@/components/common/Top";
 import Footer from "@/components/common/Footer";
-import author_head from "@/assets/images/author_head.png";
-import no_comment from "@/assets/images/no_comment.png";
 export default {
   name: "bookContent",
   components: {

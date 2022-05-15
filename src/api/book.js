@@ -8,6 +8,10 @@ export function getLastChapterAbout(params) {
     return request.get('/book/lastChapterAbout', { params });
 }
 
+export function listRecBooks(params) {
+    return request.get('/book/recList', { params });
+}
+
 export function getBookContent(chapterId) {
     return request.get(`/book/content/${chapterId}`);
 }

@@ -4,34 +4,45 @@
     <div class="nav_sub">
       <a href="/">小说精品屋</a>&gt;<a href="/book/bookclass.html?c=7">{{
         book.categoryName
-      }}</a>&gt; <span>{{ book.bookName }}</span>
+      }}</a
+      >&gt; <span>{{ book.bookName }}</span>
     </div>
     <div class="channelWrap channelBookInfo cf">
       <div class="bookCover cf">
         <a class="book_cover">
-       <img
+          <img
             class="cover"
             :src="`${imgBaseUrl}` + `${book.picUrl}`"
-                onerror="this.src='https://cdn.jsdelivr.net/gh/201206030/CDN/images/default.gif';this.onerror=null"
-                :alt="book.bookName"
+            onerror="this.src='https://cdn.jsdelivr.net/gh/201206030/CDN/images/default.gif';this.onerror=null"
+            :alt="book.bookName"
         /></a>
         <div class="book_info">
           <div class="tit">
-            <h1>{{book.bookName}}</h1>
-            <!--<i class="vip_b">VIP</i>--><a class="author">{{book.authorName}}</a>
+            <h1>{{ book.bookName }}</h1>
+            <!--<i class="vip_b">VIP</i>--><a class="author">{{
+              book.authorName
+            }}</a>
           </div>
           <ul class="list">
             <li>
-              <span class="item">类别：<em>{{book.categoryName}}</em></span>
-              <span class="item">状态：<em>{{book.bookStatus == 0 ? '连载中' : '已完结'}}</em></span>
-              <span class="item">总点击：<em id="cTotal">{{book.visitCount}}</em></span>
-              <span class="item">总字数：<em>{{book.wordCount}}</em></span>
+              <span class="item"
+                >类别：<em>{{ book.categoryName }}</em></span
+              >
+              <span class="item"
+                >状态：<em>{{
+                  book.bookStatus == 0 ? "连载中" : "已完结"
+                }}</em></span
+              >
+              <span class="item"
+                >总点击：<em id="cTotal">{{ book.visitCount }}</em></span
+              >
+              <span class="item"
+                >总字数：<em>{{ book.wordCount }}</em></span
+              >
             </li>
           </ul>
           <div class="intro_txt">
-            <p v-html="book.bookDesc">
-              
-            </p>
+            <p v-html="book.bookDesc"></p>
             <a class="icon_hide" href="javascript:void(0)" onclick=""
               ><i></i>收起</a
             >
@@ -40,9 +51,9 @@
             >
           </div>
           <div class="btns" id="optBtn">
-            
-            <a href="javascript:void(0)" @click="bookContent(book.id,book.firstChapterId)"
-              
+            <a
+              href="javascript:void(0)"
+              @click="bookContent(book.id, book.firstChapterId)"
               class="btn_ora"
               >点击阅读</a
             >
@@ -63,8 +74,52 @@
       <!--left start-->
       <div class="wrap_left fl">
         <div class="wrap_bg">
-          <LastChapterAbout/>
-          
+          <!--章节目录 start-->
+          <div class="pad20_nobt">
+            <div class="bookChapter">
+              <div class="book_tit">
+                <div class="fl">
+                  <h3>最新章节</h3>
+                  <span id="bookIndexCount"
+                    >({{ chapterAbout.chapterTotal }}章)</span
+                  >
+                </div>
+                <a class="fr" href="/book/indexList-1431636283466297344.html"
+                  >全部目录</a
+                >
+              </div>
+              <ul class="list cf">
+                <li>
+                  <span class="fl font16">
+                    <a
+                      @click="
+                        bookContent(
+                          chapterAbout.chapterInfo.bookId,
+                          chapterAbout.chapterInfo.id
+                        )
+                      "
+                      href="javascript:void(0)"
+                      v-if="chapterAbout.chapterInfo"
+                      >{{ chapterAbout.chapterInfo.chapterName }}】</a
+                    ></span
+                  >
+                  <span class="black9 fr" v-if="chapterAbout.chapterInfo"
+                    >更新时间：{{
+                      chapterAbout.chapterInfo.chapterUpdateTime
+                    }}</span
+                  >
+                </li>
+                <li class="zj_yl" id="lastBookContent">
+                  <!--go-->
+                  　　<span
+                    v-html="`${chapterAbout.contentSummary}` + '...'"
+                  ></span>
+                </li>
+                <!--此处是该章节预览，截取最前面的42个字-->
+              </ul>
+            </div>
+          </div>
+          <!--章节目录 end-->
 
           <!--作品评论区 start-->
           <div class="pad20">
@@ -74,7 +129,7 @@
                   <h3>作品评论区</h3>
                   <span id="bookCommentTotal">(0条)</span>
                 </div>
-                <a class="fr" href="#txtComment">发表评论</a>
+                <!-- <a class="fr" href="#txtComment">发表评论</a> -->
               </div>
               <div class="no_comment" id="noCommentPanel">
                 <img :src="no_comment" alt="" />
@@ -93,16 +148,19 @@
                 >
               </div>
 
+              <!--
               <div class="reply_bar" id="reply_bar">
+                
                 <div class="tit">
                   <span class="fl font16">发表评论</span>
-                  <!--未登录状态下不可发表评论，显示以下链接-->
+                  
                   <span class="fr black9" style="display: none"
                     >请先 <a class="orange" href="/user/login.html">登录</a
                     ><em class="ml10 mr10">|</em
                     ><a class="orange" href="/user/register.html">注册</a></span
                   >
                 </div>
+                
                 <textarea
                   name="txtComment"
                   rows="2"
@@ -124,7 +182,9 @@
                     ></span
                   >
                 </div>
+                
               </div>
+              -->
             </div>
           </div>
           <!--作品评论区 end-->
@@ -143,7 +203,9 @@
             <div class="msg">
               <span class="icon_qyzz">签约作家</span>
               <h4>
-                <a href="javascript:searchByK('冷漠的天蝎')">冷漠的天蝎</a>
+                <a href="javascript:searchByK('冷漠的天蝎')">{{
+                  book.authorName
+                }}</a>
               </h4>
             </div>
           </div>
@@ -161,75 +223,26 @@
           </div>
           <div class="tj_bar">
             <ul id="recBookList">
-              <li>
+              <li v-for="(item, index) in books" :key="index">
                 <div class="book_intro">
                   <div class="cover">
-                    <a href="/book/1338066517509591040.html"
+                    <a href="javascript:void(0)" @click="bookDetail(item.id)"
                       ><img
-                        src="/localPic/2020/12/13/04f7e86f8a964705b9d0149c5aaf773f.jpg"
-                        alt="庆荣华"
+                        :src="`${imgBaseUrl}` + `${item.picUrl}`"
+                        :alt="item.bookName"
+                        onerror="this.src='https://cdn.jsdelivr.net/gh/201206030/CDN/images/default.gif';this.onerror=null"
                     /></a>
                   </div>
                   <div class="dec">
-                    <a class="book_name" href="/book/1338066517509591040.html"
-                      >庆荣华</a
-                    >
-                    <a class="txt" href="/book/1338066517509591040.html"
-                      >　　睁开眼后，和姐姐互换了身体的曾华心里只有两件事，报仇和报恩，可报着报着，她却渐渐迷失了自己。</a
-                    >
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="book_intro">
-                  <div class="cover">
-                    <a href="/book/1337999139673264128.html"
-                      ><img
-                        src="/localPic/2020/12/13/430277d60be6492c9580cbcbfa8332c7.jpg"
-                        alt="戏精娘子总想毒死我"
-                    /></a>
-                  </div>
-                  <div class="dec">
-                    <a class="book_name" href="/book/1337999139673264128.html"
-                      >戏精娘子总想毒死我</a
-                    >
-                    <a class="txt" href="/book/1337999139673264128.html"
-                      >　　上辈子抢个压寨夫君，助他得天下坐龙庭，本想白头到老，举案齐眉，渣男却朝她举起了刀……再世为人，夏文锦防火防盗防美男，誓要活出个别样人生。夏家老爹愁白了头，女儿戏精、贪财、嘴毒、无赖、不要脸……整个南夏无人能及。这以后怎么嫁得出去？后来夏文锦拐走了南夏最俊的皇孙，每天在京城大街招摇过市。南夏众臣见识了她的粗鲁不要脸，在被怼得怀疑人生后，一致觉得她玷污了他们殿下这朵高岭之花，每日奏请废黜。直到，敌国来袭，太子亲征，太子妃跟去了，一出口怼退百万雄师……</a
-                    >
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="book_intro">
-                  <div class="cover">
-                    <a href="/book/1357673757073805312.html"
-                      ><img src="/images/default.gif" alt="锦衣春"
-                    /></a>
-                  </div>
-                  <div class="dec">
-                    <a class="book_name" href="/book/1357673757073805312.html"
-                      >锦衣春</a
-                    >
-                    <a class="txt" href="/book/1357673757073805312.html"
-                      >　　韩绮只不过是不想卫武再入岐途，一心想导他向善，凭他的聪明不入奸党，也能做个富甲一方大富豪，只一不小心用力过猛，把自己搭进去不说，还让夫君与奸党成了死敌！这下子可如何是好？让夫君抱条大粗腿如何？</a
-                    >
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="book_intro">
-                  <div class="cover">
-                    <a href="/book/1357666748404404224.html"
-                      ><img src="/images/default.gif" alt="太子有点冷"
-                    /></a>
-                  </div>
-                  <div class="dec">
-                    <a class="book_name" href="/book/1357666748404404224.html"
-                      >太子有点冷</a
-                    >
-                    <a class="txt" href="/book/1357666748404404224.html"
-                      >　　一个在宗门里修炼得高深武功、习得卓绝剑法的人人称道大弟子被师妹抛弃，他回家当太子。才上位不久，各种刀光剑影明枪暗箭纷沓而来，都怕他太闲似的，恨不得把他扎成只刺猬，然后将人拖下宝座。然而他不动声色解决掉一干人等。这简直比坐上的皇帝还要威风。所以：被师妹抛弃怎么办？回家当太子！然后呢？她来给你当太监！之后呢，宠她上天！</a
-                    >
+                    <a href="javascript:void(0)" @click="bookDetail(item.id)">{{
+                      item.bookName
+                    }}</a>
+                    <a
+                      class="txt"
+                      href="javascript:void(0)"
+                      @click="bookDetail(item.id)"
+                      v-html="item.bookDesc"
+                    ></a>
                   </div>
                 </div>
               </li>
@@ -248,11 +261,9 @@
 import "@/assets/styles/book.css";
 import { reactive, toRefs, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { getBookById } from "@/api/book";
-import { ElMessage, ElLoading } from "element-plus";
+import { getBookById,getLastChapterAbout,listRecBooks } from "@/api/book";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
-import LastChapterAbout from "@/components/book/LastChapterAbout.vue"
 import author_head from "@/assets/images/author_head.png";
 import no_comment from "@/assets/images/no_comment.png";
 export default {
@@ -260,7 +271,6 @@ export default {
   components: {
     Header,
     Footer,
-    LastChapterAbout
   },
   setup() {
     const route = useRoute();
@@ -268,23 +278,49 @@ export default {
 
     const state = reactive({
       book: {},
+      books: {},
+      chapterAbout:{},
       imgBaseUrl: process.env.VUE_APP_BASE_IMG_URL,
     });
-    const bookId = route.params.id;
-    onMounted(async () => {
-      const { data } = await getBookById(bookId)
-      state.book = data
+    onMounted(() => {
+      const bookId = route.params.id;
+      loadBook(bookId)
+      loadRecBooks(bookId)
+      loadLastChapterAbout(bookId)
     });
 
-    const bookContent = (bookId,chapterId) => {
+    const loadBook = async (bookId) => {
+      const { data } = await getBookById(bookId);
+      state.book = data;
+    };
+
+    const loadRecBooks = async (bookId) => {
+      const { data } = await listRecBooks({ bookId: bookId });
+      state.books = data;
+    };
+
+    const loadLastChapterAbout = async (bookId) => {
+      const { data } = await getLastChapterAbout({ bookId: bookId });
+      state.chapterAbout = data;
+    }
+
+    const bookContent = (bookId, chapterId) => {
       router.push({ path: `/book/${bookId}/${chapterId}` });
+    };
+
+    const bookDetail = (bookId) => {
+      router.push({ path: `/book/${bookId}` });
+      loadBook(bookId)
+      loadRecBooks(bookId)
+      loadLastChapterAbout(bookId)
     };
 
     return {
       ...toRefs(state),
       author_head,
       no_comment,
-      bookContent
+      bookContent,
+      bookDetail,
     };
   },
   mounted() {
