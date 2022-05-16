@@ -9,6 +9,7 @@
             type="text"
             placeholder="书名、作者、关键字"
             class="s_int"
+            v-on:keyup.enter="searchByK"
           />
           <label class="search_btn" id="btnSearch" @click="searchByK()"
             ><i class="icon"></i
