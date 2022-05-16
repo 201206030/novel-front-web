@@ -1,5 +1,9 @@
 import request from '../utils/request'
 
+export function listCategorys(params) {
+    return request.get('/book/categoryList', { params });
+}
+
 export function searchBooks(params) {
     return request.get('/book/search', { params });
 }
