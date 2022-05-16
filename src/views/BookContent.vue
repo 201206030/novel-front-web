@@ -13,7 +13,8 @@
             <ul>
               <li>
                 <a
-                  class="ico_catalog" @click="chapterList(data.chapterInfo.bookId)"
+                  class="ico_catalog"
+                  @click="chapterList(data.chapterInfo.bookId)"
                   href="javascript:void(0)"
                   title="目录"
                 >
@@ -147,7 +148,7 @@
               style="background-color: rgba(255, 255, 255, 0.45)"
               class="dir"
               @click="chapterList(data.chapterInfo.bookId)"
-                  href="javascript:void(0)"
+              href="javascript:void(0)"
               >目录</a
             >
             <a
@@ -298,7 +299,8 @@ export default {
       imgBaseUrl: process.env.VUE_APP_BASE_IMG_URL,
     });
     onMounted(() => {
-      init(route.params.chapterId);
+      init(route.params.chapterId)
+      keyDown()
     });
 
     const bookDetail = (bookId) => {
@@ -334,6 +336,25 @@ export default {
       const { data } = await getBookContent(chapterId);
       state.data = data;
     };
+
+    	  // 监听键盘
+    const keyDown = () => {
+        document.onkeydown =  (e) => {
+          //事件对象兼容
+          let e1 = e || event || window.event || arguments.callee.caller.arguments[0]
+          //键盘按键判断:左箭头-37;上箭头-38；右箭头-39;下箭头-40
+          const bookId = state.data.chapterInfo.bookId;
+          //左
+          if (e1 && e1.keyCode == 37) {
+            // 按下左箭头
+            preChapter(bookId);
+          } else if (e1 && e1.keyCode == 39) {
+            // 按下右箭头
+            nextChapter(bookId)
+          }
+        }
+    }
+
 
     return {
       ...toRefs(state),
