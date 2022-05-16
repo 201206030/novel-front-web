@@ -74,7 +74,7 @@
             </li>
           </ul>
           <div class="more">
-            <a href="/book/book_ranking.html?type=2">查看更多&gt;</a>
+            <router-link :to="{ name: 'bookRank' }">查看更多&gt;</router-link>
           </div>
         </div>
       </div>
