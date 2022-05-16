@@ -26,6 +26,11 @@ const router = createRouter({
       component: () => import('@/views/BookClass')
     },
     {
+      path: '/bookRank',
+      name: 'bookRank',
+      component: () => import('@/views/BookRank')
+    },
+    {
       path: '/book/:id',
       name: 'book',
       component: () => import('@/views/Book')
