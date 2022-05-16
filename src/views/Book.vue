@@ -1,12 +1,7 @@
 <template>
   <Header />
   <div class="main box_center cf mb50">
-    <div class="nav_sub">
-      <a href="/">小说精品屋</a>&gt;<a href="/book/bookclass.html?c=7">{{
-        book.categoryName
-      }}</a
-      >&gt; <span>{{ book.bookName }}</span>
-    </div>
+    
     <div class="channelWrap channelBookInfo cf">
       <div class="bookCover cf">
         <a class="book_cover">

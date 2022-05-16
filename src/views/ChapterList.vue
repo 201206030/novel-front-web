@@ -2,11 +2,7 @@
   <Header />
   <div class="main box_center cf">
     <div class="nav_sub">
-      <a href="/">小说精品屋</a>&gt;<a href="/book/bookclass.html?c=3"
-        >{{book.categoryName}}</a
-      >&gt;<a @click="bookDetail(book.id)" href="javascript:void(0)">{{book.bookName}}</a>&gt;<span
-        > 作品目录</span
-      >
+      
     </div>
     <div class="channelWrap channelChapterlist cf mb50">
       <div class="bookMain">

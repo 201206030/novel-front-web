@@ -87,17 +87,7 @@
         </div>
         <div class="readWrap">
           <div class="bookNav">
-            <a href="/">首页 </a>&gt;
-            <a href="/book/bookclass.html?c=6" v-if="data.bookInfo">{{
-              data.bookInfo.categoryName
-            }}</a
-            >&gt;
-            <a
-              href="javascript:void(0)"
-              v-if="data.bookInfo"
-              @click="bookDetail(data.chapterInfo.bookId)"
-              >{{ data.bookInfo.bookName }}</a
-            >
+            
           </div>
           <div id="readcontent">
             <div

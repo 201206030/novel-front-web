@@ -29,7 +29,7 @@
                   <tr v-for="(item,index) in books" :key="index">
                     <td class="rank"><i :class="'num' + (Number(`${index}`) + 1)">{{index + 1}}</i></td>
                     <td class="style">
-                      <a href="/book/bookclass.html?c=7">[{{item.categoryName}}]</a>
+                      <a href="javascript:void(0)" @click="bookDetail(item.id)">[{{item.categoryName}}]</a>
                     </td>
                     <td class="name">
                       <a @click="bookDetail(item.id)" href="javascript:void(0)"

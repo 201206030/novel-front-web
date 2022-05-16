@@ -192,7 +192,7 @@
                 <i>{{ index + 1 }}</i>
               </td>
               <td class="style">
-                <a href="/book/bookclass.html?c=2" cls="13"
+                <a href="javascript:void(0)" @click="bookDetail(item.id)" cls="13"
                   >[{{ item.categoryName }}]</a
                 >
               </td>
