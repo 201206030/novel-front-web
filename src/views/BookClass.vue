@@ -164,7 +164,7 @@
             <a
               filter-value="visit_count"
               href="javascript:void(0)"
-              :class="`${sortOn == 'visitcount desc' ? 'on' : ''}`"
+              :class="`${sortOn == 'visit_count desc' ? 'on' : ''}`"
               @click="changeSort('visit_count desc')"
               >点击量</a
             >

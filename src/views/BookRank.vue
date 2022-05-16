@@ -9,7 +9,7 @@
           <div class="pad20">
             <div class="book_tit">
               <div class="fl">
-                <h3 class="font26 mt5 mb5" id="rankName">{{rankName}}</h3>
+                <h3 class="font26 mt5 mb5" id="rankName">{{ rankName }}</h3>
               </div>
               <a class="fr"></a>
             </div>
@@ -26,27 +26,36 @@
                   </tr>
                 </thead>
                 <tbody id="bookRankList">
-                  <tr v-for="(item,index) in books" :key="index">
-                    <td class="rank"><i :class="'num' + (Number(`${index}`) + 1)">{{index + 1}}</i></td>
+                  <tr v-for="(item, index) in books" :key="index">
+                    <td class="rank">
+                      <i :class="'num' + (Number(`${index}`) + 1)">{{
+                        index + 1
+                      }}</i>
+                    </td>
                     <td class="style">
-                      <a href="javascript:void(0)" @click="bookDetail(item.id)">[{{item.categoryName}}]</a>
+                      <a href="javascript:void(0)" @click="bookDetail(item.id)"
+                        >[{{ item.categoryName }}]</a
+                      >
                     </td>
                     <td class="name">
-                      <a @click="bookDetail(item.id)" href="javascript:void(0)"
-                        >{{item.bookName}}</a
+                      <a
+                        @click="bookDetail(item.id)"
+                        href="javascript:void(0)"
+                        >{{ item.bookName }}</a
                       >
                     </td>
                     <td class="chapter">
-                      <a @click="bookDetail(item.id)" href="javascript:void(0)"
-                        >{{item.lastChapterName}}</a
+                      <a
+                        @click="bookDetail(item.id)"
+                        href="javascript:void(0)"
+                        >{{ item.lastChapterName }}</a
                       >
                     </td>
                     <td class="author">
-                      <a href="javascript:void(0)">{{item.authorName}}</a>
+                      <a href="javascript:void(0)">{{ item.authorName }}</a>
                     </td>
-                    <td class="word">{{wordCountFormat(item.wordCount)}}</td>
+                    <td class="word">{{ wordCountFormat(item.wordCount) }}</td>
                   </tr>
-                 
                 </tbody>
               </table>
             </div>
@@ -62,9 +71,17 @@
           </div>
           <div class="rightList2">
             <ul id="rankType">
-              <li><a class="on" href="javascript:void(0)" @click="visitRank">点击榜</a></li>
-              <li><a href="javascript:void(0)" @click="newestRank">新书榜</a></li>
-              <li><a href="javascript:void(0)" @click="updateRank">更新榜</a></li>
+              <li>
+                <a :class="`${rankType == 1 ? 'on' : ''}`" href="javascript:void(0)" @click="visitRank"
+                  >点击榜</a
+                >
+              </li>
+              <li>
+                <a :class="`${rankType == 2 ? 'on' : ''}`" href="javascript:void(0)" @click="newestRank">新书榜</a>
+              </li>
+              <li>
+                <a :class="`${rankType == 3 ? 'on' : ''}`" href="javascript:void(0)" @click="updateRank">更新榜</a>
+              </li>
             </ul>
           </div>
         </div>
@@ -98,6 +115,7 @@ export default {
     const state = reactive({
       books: [],
       rankName: "点击榜",
+      rankType: 1,
     });
     onMounted(() => {
       visitRank();
@@ -107,18 +125,21 @@ export default {
       const { data } = await listVisitRankBooks();
       state.books = data;
       state.rankName = "点击榜";
+      state.rankType = 1;
     };
 
     const newestRank = async () => {
       const { data } = await listNewestRankBooks();
       state.books = data;
       state.rankName = "新书榜";
+      state.rankType = 2;
     };
 
     const updateRank = async () => {
       const { data } = await listUpdateRankBooks();
       state.books = data;
       state.rankName = "更新榜";
+      state.rankType = 3;
     };
 
     const bookDetail = (bookId) => {
@@ -130,7 +151,7 @@ export default {
       bookDetail,
       newestRank,
       visitRank,
-      updateRank
+      updateRank,
     };
   },
   computed: {
