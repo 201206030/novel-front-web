@@ -57,6 +57,7 @@
               class="btn_ora"
               >点击阅读</a
             >
+            <!--
             <span id="cFavs"
               ><a
                 href="javascript:void(0);"
@@ -64,7 +65,7 @@
                 onclick="javascript:BookDetail.AddFavorites(37,0,0);"
                 >加入书架</a
               >
-            </span>
+            </span>-->
           </div>
         </div>
       </div>

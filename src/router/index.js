@@ -21,6 +21,11 @@ const router = createRouter({
       component: () => import('@/views/Home')
     },
     {
+      path: '/bookClass',
+      name: 'bookClass',
+      component: () => import('@/views/BookClass')
+    },
+    {
       path: '/book/:id',
       name: 'book',
       component: () => import('@/views/Book')
@@ -29,7 +34,7 @@ const router = createRouter({
     {
       path: '/chapterList/:bookId',
       name: 'chapterList',
-      component: () => import('@/views/BookChapterList')
+      component: () => import('@/views/ChapterList')
 	   
     },
     {

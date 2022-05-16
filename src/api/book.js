@@ -1,5 +1,9 @@
 import request from '../utils/request'
 
+export function searchBooks(params) {
+    return request.get('/book/search', { params });
+}
+
 export function getBookById(bookId) {
     return request.get(`/book/${bookId}`);
 }
