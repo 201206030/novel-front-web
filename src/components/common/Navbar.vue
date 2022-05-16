@@ -2,7 +2,7 @@
   <div class="mainNav" id="mainNav">
     <div class="box_center cf">
       <ul class="nav" id="navModule">
-        <li ><a href="/">首页</a></li>
+        <li ><router-link :to="{ name: 'home' }">首页</router-link></li>
         <li> <router-link :to="{ name: 'bookClass' }">
         全部作品
       </router-link></li>
