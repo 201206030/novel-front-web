@@ -1,7 +1,9 @@
  <template>
   <div class="topMain">
     <div class="box_center cf">
-      <router-link :to="{ name: 'home' }" class="logo fl"><img :src="logo" alt="小说精品屋" /></router-link>
+      <router-link :to="{ name: 'home' }" class="logo fl"
+        ><img :src="logo" alt="小说精品屋"
+      /></router-link>
       <div class="searchBar fl">
         <div class="search cf">
           <input
@@ -16,16 +18,21 @@
           ></label>
         </div>
       </div>
-      <!--
-        <div class="bookShelf fr" id="headerUserInfo">
-          <a class="sj_link" href="/user/favorites.html">我的书架</a>
-          <span class="user_link"
-            ><i class="line mr20">|</i
-            ><a href="/user/login.html" class="mr15">登录</a
-            ><a href="/user/register.html">注册</a></span
-          >
-        </div>
-        -->
+
+      <div class="bookShelf fr" id="headerUserInfo">
+        <!--
+        <a class="sj_link" href="/user/favorites.html">我的书架</a>-->
+        <span v-if="!token" class="user_link"
+          ><!--<i class="line mr20">|</i
+          >--><a href="/user/login.html" class="mr15">登录</a>
+          <router-link :to="{ name: 'register' }">注册</router-link>
+        </span>
+        <span v-if="token" class="user_link"
+          ><!--<i class="line mr20">|</i
+          >--><a class="mr15">{{nickName}}</a
+          ><a @click="logout" href="javascript:void(0)">退出</a></span
+        >
+      </div>
     </div>
   </div>
 </template>
@@ -34,23 +41,34 @@
 import logo from "@/assets/images/logo.png";
 import { reactive, toRefs, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
+import { getToken, getNickName,removeToken } from "@/utils/auth";
 export default {
   name: "Top",
   setup(props, context) {
     const state = reactive({
-      keyword:''
-    })
+      keyword: "",
+      nickName: getNickName(),
+      token: getToken(),
+    });
+    state.nickName = getNickName()
+    state.token = getToken()
     const route = useRoute();
     const router = useRouter();
     state.keyword = route.query.key;
     const searchByK = () => {
-      router.push({ path: '/bookClass',query:{'key':state.keyword}});
-      context.emit('eventSerch',state.keyword);
+      router.push({ path: "/bookClass", query: { key: state.keyword } });
+      context.emit("eventSerch", state.keyword);
+    };
+    const logout = () => {
+        removeToken()
+        state.nickName = ""
+        state.token = ""
     }
     return {
       ...toRefs(state),
       logo,
-      searchByK
+      searchByK,
+      logout
     };
   },
 };

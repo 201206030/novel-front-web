@@ -15,6 +15,11 @@ const router = createRouter({
       component: () => import('@/views/Home')
     },
     {
+      path: '/register',
+      name: 'register',
+      component: () => import('@/views/Register')
+    },
+    {
       path: '/news/:id',
       name: 'news',
       component: () => import('@/views/News')
