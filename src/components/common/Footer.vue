@@ -8,7 +8,7 @@
             ><a href="/">网站首页</a><i class="line">|</i
             ><a href="/about/default.html">关于我们</a><i class="line">|</i
             ><a href="/about/contact.html">联系我们</a><i class="line">|</i
-            ><a href="/user/feedback.html">反馈留言</a><i class="line">|</i
+            ><router-link :to="{ name: 'feadBack' }" class="line" >反馈留言</router-link><i class="line">|</i
             ><a href="/author/index.html">作家专区</a><i class="line">|</i
             ><a href="/mobile/fiction_house.apk">客户端</a>
           </li>

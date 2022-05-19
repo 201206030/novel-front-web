@@ -7,3 +7,7 @@ export function register(params) {
 export function login(params) {
     return request.post('/user/login', params);
 }
+
+export function submitFeedBack(params) {
+    return request.post('/user/feedBack', params);
+}
