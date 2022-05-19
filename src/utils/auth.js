@@ -15,6 +15,10 @@ export const removeToken = () =>  {
   return localStorage.removeItem(TokenKey)
 }
 
+export const removeNickName = () =>  {
+  return localStorage.removeItem(nickNameKey)
+}
+
 export const setNickName = (nickName) => {
   return localStorage.setItem(nickNameKey, nickName)
 }

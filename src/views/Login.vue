@@ -3,64 +3,55 @@
 
   <div class="main box_center cf">
     <div class="userBox cf">
-      <form method="post" action="./register.html" id="form2">
-        <div class="user_l">
-          <h3>注册小说精品屋账号</h3>
+      <div class="user_l">
+        <form method="post" action="./login.html" id="form1">
+          <h3>登录小说精品屋</h3>
           <ul class="log_list">
             <li><span id="LabErr"></span></li>
             <li>
               <input
-                v-model="username"
+              v-model="username"
                 name="txtUName"
                 type="text"
                 id="txtUName"
+                placeholder="手机号码"
                 class="s_input icon_name"
-                placeholder="请输入您的手机号码"
               />
             </li>
             <li>
               <input
-                v-model="password"
+              v-model="password"
                 name="txtPassword"
                 type="password"
                 id="txtPassword"
+                placeholder="密码"
                 class="s_input icon_key"
-                placeholder="请输入密码：6-20位字母/数字"
               />
             </li>
-            <li class="log_code cf">
-              <input
-                v-model="velCode"
-                name="TxtChkCode"
-                type="text"
-                maxlength="4"
-                id="TxtChkCode"
-                class="s_input icon_code"
-                placeholder="请输入验证码"
-              /><img
-                style="cursor: pointer"
-                class="code_pic"
-                :src="imgVerifyCode"
-                id="chkd"
-                @click="loadImgVerifyCode"
-              />
-            </li>
+            <!--
+            <li class="autologin cf">
+              <label class="fl"
+                ><input id="autoLogin" type="checkbox" /><em
+                  >下次自动登录</em
+                ></label
+              >
+            </li>-->
             <li>
               <input
                 type="button"
-                name="btnRegister"
-                value="注册"
-                id="btnRegister"
+                name="btnLogin"
+                value="登录"
+                id="btnLogin"
                 class="btn_red"
-                @click="registerUser"
+                @click="loginUser"
               />
             </li>
           </ul>
-        </div>
-      </form>
+        </form>
+      </div>
       <div class="user_r">
-        <p class="tit">已有账号？</p>
-                <router-link :to="{name: 'login'}" class="btn_ora_white">立即登录</router-link>
+        <p class="tit">还没有注册账号？</p>
+        <router-link :to="{name: 'register'}" class="btn_ora_white">立即注册</router-link>
         <!--
         <div class="fast_login" style="display: none">
           <div class="fast_tit">
@@ -110,8 +101,8 @@ import { reactive, toRefs, onMounted, ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { ElMessage } from "element-plus";
 import { getImgVerifyCode } from "@/api/resource";
-import { register } from "@/api/user";
-import { setToken,setNickName } from "@/utils/auth";
+import { login } from "@/api/user";
+import { setToken, setNickName } from "@/utils/auth";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 export default {
@@ -125,23 +116,11 @@ export default {
     const router = useRouter();
 
     const state = reactive({
-      imgVerifyCode: "",
-      sessionId: "",
       username: "",
-      password: "",
-      velCode: "",
-    });
-    onMounted(async () => {
-      loadImgVerifyCode();
+      password: ""
     });
 
-    const loadImgVerifyCode = async () => {
-      const { data } = await getImgVerifyCode();
-      state.imgVerifyCode = "data:image/png;base64," + data.img;
-      state.sessionId = data.sessionId;
-    };
-
-    const registerUser = async () => {
+    const loginUser = async () => {
       if (!state.username) {
         ElMessage.error("用户名不能为空！");
         return;
@@ -153,25 +132,17 @@ export default {
         ElMessage.error("密码不能为空！");
         return;
       }
-      if (!state.velCode) {
-        ElMessage.error("验证码不能为空！");
-        return;
-      }
-      if (!/^\d{4}/.test(state.velCode)) {
-        ElMessage.error("验证码格式不正确！");
-        return;
-      }
-      const { data } = await register(state);
+      
+      const { data } = await login(state);
 
-      setToken(data);
-      setNickName(state.username);
+      setToken(data.token);
+      setNickName(data.nickName)
       router.push({ path: "/home" });
     };
 
     return {
       ...toRefs(state),
-      loadImgVerifyCode,
-      registerUser,
+      loginUser,
     };
   },
 };

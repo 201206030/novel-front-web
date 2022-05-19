@@ -20,6 +20,11 @@ const router = createRouter({
       component: () => import('@/views/Register')
     },
     {
+      path: '/login',
+      name: 'login',
+      component: () => import('@/views/Login')
+    },
+    {
       path: '/news/:id',
       name: 'news',
       component: () => import('@/views/News')

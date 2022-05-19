@@ -24,12 +24,15 @@
         <a class="sj_link" href="/user/favorites.html">我的书架</a>-->
         <span v-if="!token" class="user_link"
           ><!--<i class="line mr20">|</i
-          >--><a href="/user/login.html" class="mr15">登录</a>
-          <router-link :to="{ name: 'register' }">注册</router-link>
+          >-->
+          <router-link :to="{ name: 'login' }" class="mr15">登录</router-link>
+          <router-link :to="{ name: 'register' }" class="mr15"
+            >注册</router-link
+          >
         </span>
         <span v-if="token" class="user_link"
           ><!--<i class="line mr20">|</i
-          >--><a class="mr15">{{nickName}}</a
+          >--><a class="mr15">{{ nickName }}</a
           ><a @click="logout" href="javascript:void(0)">退出</a></span
         >
       </div>
@@ -41,7 +44,7 @@
 import logo from "@/assets/images/logo.png";
 import { reactive, toRefs, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { getToken, getNickName,removeToken } from "@/utils/auth";
+import { getToken, getNickName, removeToken, removeNickName } from "@/utils/auth";
 export default {
   name: "Top",
   setup(props, context) {
@@ -50,8 +53,8 @@ export default {
       nickName: getNickName(),
       token: getToken(),
     });
-    state.nickName = getNickName()
-    state.token = getToken()
+    state.nickName = getNickName();
+    state.token = getToken();
     const route = useRoute();
     const router = useRouter();
     state.keyword = route.query.key;
@@ -60,15 +63,16 @@ export default {
       context.emit("eventSerch", state.keyword);
     };
     const logout = () => {
-        removeToken()
-        state.nickName = ""
-        state.token = ""
-    }
+      removeToken();
+      removeNickName();
+      state.nickName = "";
+      state.token = "";
+    };
     return {
       ...toRefs(state),
       logo,
       searchByK,
-      logout
+      logout,
     };
   },
 };
