@@ -239,7 +239,7 @@ import Top from "@/components/common/Top";
 import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
 export default {
-  name: "bookClass",
+  name: "bookclass",
   components: {
     Top,
     Navbar,

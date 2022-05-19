@@ -3,7 +3,7 @@
     <div class="box_center cf">
       <ul class="nav" id="navModule">
         <li ><router-link :to="{ name: 'home' }">首页</router-link></li>
-        <li> <router-link :to="{ name: 'bookClass' }">
+        <li> <router-link :to="{ name: 'bookclass' }">
         全部作品
       </router-link></li>
         <li><router-link :to="{ name: 'bookRank' }">排行榜</router-link></li>

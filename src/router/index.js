@@ -25,9 +25,9 @@ const router = createRouter({
       component: () => import('@/views/Login')
     },
     {
-      path: '/feadBack',
-      name: 'feadBack',
-      component: () => import('@/views/FeadBack')
+      path: '/feadback',
+      name: 'feadback',
+      component: () => import('@/views/Feadback')
     },
     {
       path: '/news/:id',
@@ -35,12 +35,12 @@ const router = createRouter({
       component: () => import('@/views/News')
     },
     {
-      path: '/bookClass',
-      name: 'bookClass',
+      path: '/bookclass',
+      name: 'bookclass',
       component: () => import('@/views/BookClass')
     },
     {
-      path: '/bookRank',
+      path: '/book_rank',
       name: 'bookRank',
       component: () => import('@/views/BookRank')
     },
@@ -51,7 +51,7 @@ const router = createRouter({
 	   
     },
     {
-      path: '/chapterList/:bookId',
+      path: '/chapter_list/:bookId',
       name: 'chapterList',
       component: () => import('@/views/ChapterList')
 	   

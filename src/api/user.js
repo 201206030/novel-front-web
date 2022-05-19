@@ -9,5 +9,5 @@ export function login(params) {
 }
 
 export function submitFeedBack(params) {
-    return request.post('/user/feedBack', params);
+    return request.post('/user/feedback', params);
 }

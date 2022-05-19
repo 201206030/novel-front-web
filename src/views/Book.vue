@@ -313,7 +313,7 @@ export default {
     };
 
     const chapterList = (bookId) => {
-      router.push({ path: `/chapterList/${bookId}` });
+      router.push({ path: `/chapter_list/${bookId}` });
     };
 
     const addBookVisit = async (bookId) => {

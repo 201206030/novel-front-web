@@ -59,7 +59,7 @@ import { setToken, setNickName } from "@/utils/auth";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 export default {
-  name: "feadBack",
+  name: "feadback",
   components: {
     Header,
     Footer,

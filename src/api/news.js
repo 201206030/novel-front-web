@@ -1,7 +1,7 @@
 import request from '../utils/request'
 
 export function listLatestNews() {
-    return request.get('/news/latestList');
+    return request.get('/news/latest_list');
 }
 
 export function getNewsById(newsId) {

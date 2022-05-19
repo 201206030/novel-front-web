@@ -6,6 +6,6 @@ export function listHomeBooks() {
 
 
 export function listHomeFriendLinks() {
-    return request.get('/home/friendLinks');
+    return request.get('/home/friend_Link/list');
 }
 

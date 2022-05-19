@@ -98,12 +98,8 @@
                 <h1 v-if="data.chapterInfo">
                   {{ data.chapterInfo.chapterName }}
                 </h1>
-                <div class="textinfo">
-                  类别：<a
-                    href="/book/bookclass.html?c=6"
-                    v-if="data.bookInfo"
-                    >{{ data.bookInfo.categoryName }}</a
-                  >
+                <div class="textinfo" v-if="data.chapterInfo">
+                  类别：{{ data.bookInfo.categoryName }}
                   作者：<a
                     href="javascript:searchByK('最终马甲')"
                     v-if="data.bookInfo"
@@ -290,6 +286,7 @@ export default {
     });
     onMounted(() => {
       init(route.params.chapterId)
+      console.log("route.params.chapterId:",route.params.chapterId)
       keyDown()
     });
 
@@ -298,7 +295,7 @@ export default {
     };
 
     const chapterList = (bookId) => {
-      router.push({ path: `/chapterList/${bookId}` });
+      router.push({ path: `/chapter_list/${bookId}` });
     };
 
 

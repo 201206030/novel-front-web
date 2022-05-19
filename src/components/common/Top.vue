@@ -59,7 +59,7 @@ export default {
     const router = useRouter();
     state.keyword = route.query.key;
     const searchByK = () => {
-      router.push({ path: "/bookClass", query: { key: state.keyword } });
+      router.push({ path: "/bookclass", query: { key: state.keyword } });
       context.emit("eventSerch", state.keyword);
     };
     const logout = () => {

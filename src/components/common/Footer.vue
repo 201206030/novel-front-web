@@ -32,7 +32,7 @@ export default {
       if(!getToken()){
         router.push({name: 'login'});
       }else{
-      router.push({name: 'feadBack'});
+      router.push({name: 'feadback'});
       }
     };
     return {
