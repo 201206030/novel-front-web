@@ -187,10 +187,10 @@
                 v-model="dialogUpdateCommentFormVisible"
                 title="评论修改"
               >
-                <el-form :model="form">
+                <el-form >
                   <el-form-item
                     label="评论内容"
-                    :label-width="formLabelWidth"
+                    
                   >
                     <el-input type="textarea" v-model="updateComment"/>
                   </el-form-item>
