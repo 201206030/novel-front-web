@@ -102,7 +102,7 @@ import { useRouter, useRoute } from "vue-router";
 import { ElMessage } from "element-plus";
 import { getImgVerifyCode } from "@/api/resource";
 import { login } from "@/api/user";
-import { setToken, setNickName } from "@/utils/auth";
+import { setToken, setNickName,setUid } from "@/utils/auth";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 export default {
@@ -136,6 +136,7 @@ export default {
       const { data } = await login(state);
 
       setToken(data.token);
+      setUid(data.uid)
       setNickName(data.nickName)
       router.push({ path: "/home" });
     };

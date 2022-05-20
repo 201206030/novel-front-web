@@ -19,3 +19,7 @@ export function comment(params) {
 export function deleteComment(id) {
     return request.delete(`/user/comment/${id}`);
 }
+
+export function updateComment(id,content) {
+    return request.putForm(`/user/comment/${id}`,content);
+}

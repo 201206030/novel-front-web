@@ -60,7 +60,9 @@
       </form>
       <div class="user_r">
         <p class="tit">已有账号？</p>
-                <router-link :to="{name: 'login'}" class="btn_ora_white">立即登录</router-link>
+        <router-link :to="{ name: 'login' }" class="btn_ora_white"
+          >立即登录</router-link
+        >
         <!--
         <div class="fast_login" style="display: none">
           <div class="fast_tit">
@@ -111,7 +113,7 @@ import { useRouter, useRoute } from "vue-router";
 import { ElMessage } from "element-plus";
 import { getImgVerifyCode } from "@/api/resource";
 import { register } from "@/api/user";
-import { setToken,setNickName } from "@/utils/auth";
+import { setToken, setNickName, setUid } from "@/utils/auth";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 export default {
@@ -163,7 +165,8 @@ export default {
       }
       const { data } = await register(state);
 
-      setToken(data);
+      setToken(data.token);
+      setUid(data.uid);
       setNickName(state.username);
       router.push({ path: "/home" });
     };

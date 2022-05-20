@@ -44,7 +44,7 @@
 import logo from "@/assets/images/logo.png";
 import { reactive, toRefs, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { getToken, getNickName, removeToken, removeNickName } from "@/utils/auth";
+import { getToken, getNickName, removeToken, removeNickName,removeUid } from "@/utils/auth";
 export default {
   name: "Top",
   setup(props, context) {
@@ -65,6 +65,7 @@ export default {
     const logout = () => {
       removeToken();
       removeNickName();
+      removeUid()
       state.nickName = "";
       state.token = "";
     };

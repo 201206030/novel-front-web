@@ -3,6 +3,9 @@ const TokenKey = 'Authorization'
 
 const nickNameKey = 'nickName'
 
+const uidKey = 'uid'
+
+
 export const getToken = () => {
     return localStorage.getItem(TokenKey);
 }
@@ -26,3 +29,16 @@ export const setNickName = (nickName) => {
 export const getNickName = () => {
   return localStorage.getItem(nickNameKey);
 }
+
+export const setUid = (uid) => {
+  return localStorage.setItem(uidKey, uid)
+}
+
+export const getUid = () => {
+  return localStorage.getItem(uidKey);
+}
+
+export const removeUid = () =>  {
+  return localStorage.removeItem(uidKey)
+}
+

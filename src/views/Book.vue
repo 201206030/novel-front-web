@@ -136,12 +136,24 @@
                   >发表评论</a
                 >
               </div>
-              <div v-if="newestComments.commentTotal == 0" class="no_comment" id="noCommentPanel">
+              <div
+                v-if="newestComments.commentTotal == 0"
+                class="no_comment"
+                id="noCommentPanel"
+              >
                 <img :src="no_comment" alt="" />
                 <span class="block">暂无评论</span>
               </div>
-              <div v-if="newestComments.commentTotal > 0" class="commentBar" id="commentPanel">
-                <div class="comment_list cf" v-for="(item,index) in newestComments.comments" :key="index">
+              <div
+                v-if="newestComments.commentTotal > 0"
+                class="commentBar"
+                id="commentPanel"
+              >
+                <div
+                  class="comment_list cf"
+                  v-for="(item, index) in newestComments.comments"
+                  :key="index"
+                >
                   <div class="user_heads fl" vals="389">
                     <img :src="man" class="user_head" alt="" /><span
                       class="user_level1"
@@ -150,24 +162,50 @@
                     >
                   </div>
                   <ul class="pl_bar fr">
-                    <li class="name">{{item.commentUser}}</li>
-                    <li class="dec">{{item.commentContent}}</li>
+                    <li class="name">{{ item.commentUser }}</li>
+                    <li class="dec">{{ item.commentContent }}</li>
                     <li class="other cf">
-                      <span class="time fl">{{item.commentTime}}</span
-                      ><span class="fr"
+                      <span class="time fl">{{ item.commentTime }}</span
+                      ><span class="fr" v-if="item.commentUserId == uid"
                         ><a
+                          href="javascript:void(0);"
+                          @click="updateUserComment(item.id,item.commentContent)"
+                          class="zan"
+                          >修改</a
+                        > | <a
                           href="javascript:void(0);"
                           @click="deleteUserComment(item.id)"
                           class="zan"
-                          
                           >删除</a
                         ></span
                       >
                     </li>
                   </ul>
                 </div>
-             
               </div>
+              <el-dialog
+                v-model="dialogUpdateCommentFormVisible"
+                title="评论修改"
+              >
+                <el-form :model="form">
+                  <el-form-item
+                    label="评论内容"
+                    :label-width="formLabelWidth"
+                  >
+                    <el-input type="textarea" v-model="updateComment"/>
+                  </el-form-item>
+                </el-form>
+                <template #footer>
+                  <span class="dialog-footer">
+                    <el-button @click="dialogUpdateCommentFormVisible = false"
+                      >取消</el-button
+                    >
+                    <el-button type="primary" @click="goUpdateComment()"
+                      >确定</el-button
+                    >
+                  </span>
+                </template>
+              </el-dialog>
 
               <!--无评论时此处隐藏-->
               <div class="more_bar" id="moreCommentPanel" style="display: none">
@@ -293,9 +331,10 @@ import {
   addVisitCount,
   getLastChapterAbout,
   listRecBooks,
-  listNewestComments,
+  listNewestComments
 } from "@/api/book";
-import { comment , deleteComment} from "@/api/user";
+import { comment, deleteComment, updateComment } from "@/api/user";
+import {getUid} from "@/utils/auth"
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import author_head from "@/assets/images/author_head.png";
@@ -312,12 +351,16 @@ export default {
     const router = useRouter();
 
     const state = reactive({
+      uid: getUid(),
       book: {},
       books: {},
       chapterAbout: {},
       commentContent: "",
       newestComments: {},
       imgBaseUrl: process.env.VUE_APP_BASE_IMG_URL,
+      dialogUpdateCommentFormVisible: false,
+      commentId: "",
+      updateComment: ""
     });
     onMounted(() => {
       const bookId = route.params.id;
@@ -386,13 +429,25 @@ export default {
         commentContent: state.commentContent,
       });
       state.commentContent = "";
-      loadNewestComments(state.book.id)
+      loadNewestComments(state.book.id);
+    };
+
+    const updateUserComment = async (id,comment) => {
+      state.dialogUpdateCommentFormVisible = true
+      state.updateComment = comment
+      state.commentId = id
     };
 
     const deleteUserComment = async (id) => {
-        await deleteComment(id)
-        loadNewestComments(state.book.id)
-    }
+      await deleteComment(id);
+      loadNewestComments(state.book.id);
+    };
+
+    const goUpdateComment = async (id) => {
+      state.dialogUpdateCommentFormVisible = false
+      await updateComment(state.commentId,{"content":state.updateComment})
+      loadNewestComments(state.book.id);
+    };
 
     return {
       ...toRefs(state),
@@ -404,7 +459,9 @@ export default {
       goToAnchor,
       userComment,
       deleteUserComment,
-      man
+      man,
+      updateUserComment,
+      goUpdateComment
     };
   },
   mounted() {
@@ -431,3 +488,27 @@ export default {
   },
 };
 </script>
+
+<style>
+.el-button:not(.is-text) {
+    border: #f80;
+    border-color: #f80;
+}
+.el-button--primary {
+    --el-button-hover-bg-color: #f80;
+}
+
+.el-button--primary {
+    --el-button-bg-color: #f70;
+}
+
+.el-button {
+
+    --el-button-hover-text-color: #fafafa;
+}
+
+.el-button {
+
+    --el-button-hover-bg-color: #ff880061;
+}
+</style>
