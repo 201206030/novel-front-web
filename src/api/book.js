@@ -52,3 +52,4 @@ export function listUpdateRankBooks() {
     return request.get('/book/update_rank');
 }
 
+

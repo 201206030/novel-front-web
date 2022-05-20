@@ -11,3 +11,7 @@ export function login(params) {
 export function submitFeedBack(params) {
     return request.post('/user/feedback', params);
 }
+
+export function comment(params) {
+    return request.post('/user/comment',params);
+}

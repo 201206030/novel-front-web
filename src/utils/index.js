@@ -1,4 +1,14 @@
 
+export const goToAnchor = (id) => {
+  var anchor = document.getElementById(id);
+  // chrome
+  document.body.scrollTop = anchor.offsetTop;
+  // firefox
+  document.documentElement.scrollTop = anchor.offsetTop;
+  // safari
+  window.pageYOffset = anchor.offsetTop;
+}
+
 export const getQueryObject = (url) => {
   url = url == null ? window.location.href : url
   const search = url.substring(url.lastIndexOf('?') + 1)
