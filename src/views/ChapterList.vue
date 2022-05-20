@@ -16,7 +16,7 @@
               <li>
                 <span>作者：<a href="javascript:void(0)">{{book.authorName}}</a></span>
                 <span
-                  >类别：<a href="/book/bookclass.html?c=3">{{book.categoryName}}</a></span
+                  >类别：{{book.categoryName}}</span
                 >
                 <span>状态：<em class="black3">{{
                   book.bookStatus == 0 ? "连载中" : "已完结"

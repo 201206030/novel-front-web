@@ -52,4 +52,7 @@ export function listUpdateRankBooks() {
     return request.get('/book/update_rank');
 }
 
+export function listNewestComments(params) {
+    return request.get('/book/comment/newest_list',{ params });
+}
 

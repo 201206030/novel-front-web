@@ -125,7 +125,9 @@
               <div class="book_tit">
                 <div class="fl">
                   <h3>作品评论区</h3>
-                  <span id="bookCommentTotal">(0条)</span>
+                  <span id="bookCommentTotal"
+                    >({{ newestComments.commentTotal }}条)</span
+                  >
                 </div>
                 <a
                   class="fr"
@@ -134,15 +136,38 @@
                   >发表评论</a
                 >
               </div>
-              <div class="no_comment" id="noCommentPanel">
+              <div v-if="newestComments.commentTotal == 0" class="no_comment" id="noCommentPanel">
                 <img :src="no_comment" alt="" />
                 <span class="block">暂无评论</span>
               </div>
-              <div
-                class="commentBar"
-                id="commentPanel"
-                style="display: none"
-              ></div>
+              <div v-if="newestComments.commentTotal > 0" class="commentBar" id="commentPanel">
+                <div class="comment_list cf" v-for="(item,index) in newestComments.comments" :key="index">
+                  <div class="user_heads fl" vals="389">
+                    <img :src="man" class="user_head" alt="" /><span
+                      class="user_level1"
+                      style="display: none"
+                      >见习</span
+                    >
+                  </div>
+                  <ul class="pl_bar fr">
+                    <li class="name">{{item.commentUser}}</li>
+                    <li class="dec">{{item.commentContent}}</li>
+                    <li class="other cf">
+                      <span class="time fl">{{item.commentTime}}</span
+                      ><span class="fr"
+                        ><a
+                          href="javascript:void(0);"
+                          onclick="javascript:BookDetail.AddAgreeTotal(77,this);"
+                          class="zan"
+                          style="display: none"
+                          >赞<i class="num">(0)</i></a
+                        ></span
+                      >
+                    </li>
+                  </ul>
+                </div>
+             
+              </div>
 
               <!--无评论时此处隐藏-->
               <div class="more_bar" id="moreCommentPanel" style="display: none">
@@ -259,6 +284,7 @@
 
 <script>
 import "@/assets/styles/book.css";
+import man from "@/assets/images/man.png";
 import { reactive, toRefs, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 import { useRouter, useRoute } from "vue-router";
@@ -267,6 +293,7 @@ import {
   addVisitCount,
   getLastChapterAbout,
   listRecBooks,
+  listNewestComments,
 } from "@/api/book";
 import { comment } from "@/api/user";
 import Header from "@/components/common/Header";
@@ -289,6 +316,7 @@ export default {
       books: {},
       chapterAbout: {},
       commentContent: "",
+      newestComments: {},
       imgBaseUrl: process.env.VUE_APP_BASE_IMG_URL,
     });
     onMounted(() => {
@@ -296,6 +324,7 @@ export default {
       loadBook(bookId);
       loadRecBooks(bookId);
       loadLastChapterAbout(bookId);
+      loadNewestComments(bookId);
     });
 
     const loadBook = async (bookId) => {
@@ -323,6 +352,7 @@ export default {
       loadBook(bookId);
       loadRecBooks(bookId);
       loadLastChapterAbout(bookId);
+      loadNewestComments(bookId);
     };
 
     const chapterList = (bookId) => {
@@ -333,22 +363,30 @@ export default {
       addVisitCount({ bookId: bookId });
     };
 
+    const loadNewestComments = async (bookId) => {
+      const { data } = await listNewestComments({ bookId: bookId });
+      state.newestComments = data;
+    };
+
     const userComment = async () => {
       if (!state.commentContent) {
         ElMessage.error("用户评论不能为空！");
-        return
+        return;
       }
       if (state.commentContent.length < 10) {
         ElMessage.error("评论不能少于 10 个字符！");
-        return
+        return;
       }
       if (state.commentContent.length > 512) {
         ElMessage.error("评论不能多于 512 个字符！");
-        return
+        return;
       }
-      await comment({'bookId':state.book.id,"commentContent":state.commentContent});
-      state.commentContent = ""
-
+      await comment({
+        bookId: state.book.id,
+        commentContent: state.commentContent,
+      });
+      state.commentContent = "";
+      loadNewestComments(state.book.id)
     };
 
     return {
@@ -360,6 +398,7 @@ export default {
       chapterList,
       goToAnchor,
       userComment,
+      man
     };
   },
   mounted() {
