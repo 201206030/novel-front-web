@@ -157,10 +157,10 @@
                       ><span class="fr"
                         ><a
                           href="javascript:void(0);"
-                          onclick="javascript:BookDetail.AddAgreeTotal(77,this);"
+                          @click="deleteUserComment(item.id)"
                           class="zan"
-                          style="display: none"
-                          >赞<i class="num">(0)</i></a
+                          
+                          >删除</a
                         ></span
                       >
                     </li>
@@ -295,7 +295,7 @@ import {
   listRecBooks,
   listNewestComments,
 } from "@/api/book";
-import { comment } from "@/api/user";
+import { comment , deleteComment} from "@/api/user";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import author_head from "@/assets/images/author_head.png";
@@ -389,6 +389,11 @@ export default {
       loadNewestComments(state.book.id)
     };
 
+    const deleteUserComment = async (id) => {
+        await deleteComment(id)
+        loadNewestComments(state.book.id)
+    }
+
     return {
       ...toRefs(state),
       author_head,
@@ -398,6 +403,7 @@ export default {
       chapterList,
       goToAnchor,
       userComment,
+      deleteUserComment,
       man
     };
   },

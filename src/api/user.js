@@ -15,3 +15,7 @@ export function submitFeedBack(params) {
 export function comment(params) {
     return request.post('/user/comment',params);
 }
+
+export function deleteComment(id) {
+    return request.delete(`/user/comment/${id}`);
+}
