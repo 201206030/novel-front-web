@@ -27,7 +27,7 @@ const router = createRouter({
     {
       path: '/feadback',
       name: 'feadback',
-      component: () => import('@/views/Feadback')
+      component: () => import('@/views/FeadBack')
     },
     {
       path: '/news/:id',
