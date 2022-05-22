@@ -163,7 +163,7 @@
                   </div>
                   <ul class="pl_bar fr">
                     <li class="name">{{ item.commentUser }}</li>
-                    <li class="dec">{{ item.commentContent }}</li>
+                    <li class="dec" v-html="item.commentContent"></li>
                     <li class="other cf">
                       <span class="time fl">{{ item.commentTime }}</span
                       ><span class="fr" v-if="item.commentUserId == uid"
