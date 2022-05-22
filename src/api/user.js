@@ -23,3 +23,11 @@ export function deleteComment(id) {
 export function updateComment(id,content) {
     return request.putForm(`/user/comment/${id}`,content);
 }
+
+export function getUserinfo() {
+    return request.get('/user');
+}
+
+export function updateUserInfo(userInfo) {
+    return request.put('/user',userInfo);
+}

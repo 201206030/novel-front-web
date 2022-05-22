@@ -148,8 +148,9 @@ export default {
         ElMessage.error("用户名不能为空！");
         return;
       }
-      if (!/^1[3|4|5|6|7|8|9][0-9]{9}/.test(state.username)) {
+      if (!/^1[3-9]\d{9}$/.test(state.username)) {
         ElMessage.error("手机号格式不正确！");
+        return;
       }
       if (!state.password) {
         ElMessage.error("密码不能为空！");

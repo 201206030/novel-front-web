@@ -61,6 +61,12 @@ const router = createRouter({
       name: 'bookContent',
       component: () => import('@/views/BookContent')
 	   
+    },
+    {
+      path: '/user/setup',
+      name: 'userSetup',
+      component: () => import('@/views/UserSetup')
+	   
     }
   ]
 })

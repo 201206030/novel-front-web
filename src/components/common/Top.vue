@@ -32,8 +32,8 @@
         </span>
         <span v-if="token" class="user_link"
           ><!--<i class="line mr20">|</i
-          >--><a class="mr15">{{ nickName }}</a
-          ><a @click="logout" href="javascript:void(0)">退出</a></span
+          >--><router-link :to="{name:'userSetup'}" class="mr15">{{ nickName }}</router-link>
+          <a @click="logout" href="javascript:void(0)">退出</a></span
         >
       </div>
     </div>

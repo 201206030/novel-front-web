@@ -155,7 +155,7 @@
                   :key="index"
                 >
                   <div class="user_heads fl" vals="389">
-                    <img :src="man" class="user_head" alt="" /><span
+                    <img :src="item.commentUserPhoto ? uploadImgBaseUrl + item.commentUserPhoto : man"  class="user_head" alt="" /><span
                       class="user_level1"
                       style="display: none"
                       >见习</span
@@ -358,6 +358,7 @@ export default {
       commentContent: "",
       newestComments: {},
       imgBaseUrl: process.env.VUE_APP_BASE_IMG_URL,
+      uploadImgBaseUrl: process.env.VUE_APP_BASE_UPLOAD_IMG_URL,
       dialogUpdateCommentFormVisible: false,
       commentId: "",
       updateComment: ""
