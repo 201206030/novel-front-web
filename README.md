@@ -12,9 +12,6 @@ novel 是一套基于时下**最新** Java 技术栈 Spring Boot 3 + Vue 3 开�
 
 - 后端项目（更新中）：[GitHub](https://github.com/201206030/novel) ｜ [码云](https://gitee.com/novel_dev_team/novel)
 - 后端微服务版本项目（待更新）：[GitHub](https://github.com/201206030/novel-cloud) ｜ [码云](https://gitee.com/novel_dev_team/novel-cloud)
-- 前端小说门户系统项目（更新中）：[GitHub](https://github.com/201206030/novel-front-web) ｜ [码云](https://gitee.com/novel_dev_team/novel-front-web)
-- 前端作家管理系统项目：待上线
-- 前端平台后台管理系统项目：待上线
 - 线上应用版：[GitHub](https://github.com/201206030/novel-plus) ｜ [码云](https://gitee.com/novel_dev_team/novel-plus) ｜[演示地址](http://47.106.243.172:8888/)
 
 ## 演示地址
@@ -164,7 +161,7 @@ git clone https://gitee.com/novel_dev_team/novel-front-web.git
 
 ## 项目教程
 
-[手把手教你从零开始开发上线一个生产级别的小说系统](https://youdoc.github.io/course/novel/3.html)
+[手把手教你从零开始开发上线一个生产级别的小说系统](https://youdoc.github.io/course/novel)
     
 ## 公众号
 
