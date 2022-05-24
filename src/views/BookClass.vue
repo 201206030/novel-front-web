@@ -197,9 +197,7 @@
                 >
               </td>
               <td class="name">
-                <a href="javascript:void(0)" @click="bookDetail(item.id)">{{
-                  item.bookName
-                }}</a>
+                <a href="javascript:void(0)" @click="bookDetail(item.id)" v-html="item.bookName"></a>
               </td>
               <td class="chapter">
                 <a href="javascript:void(0)" @click="bookDetail(item.id)">{{
@@ -207,7 +205,7 @@
                 }}</a>
               </td>
               <td class="author">
-                <a href="javascript:void(0)">{{ item.authorName }}</a>
+                <a href="javascript:void(0)" v-html="item.authorName"></a>
               </td>
               <td class="word">{{ wordCountFormat(item.wordCount) }}</td>
             </tr>
