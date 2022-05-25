@@ -7,8 +7,8 @@
           <img
             class="cover"
             :src="`${imgBaseUrl}` + `${book.picUrl}`"
-            onerror="this.src='https://cdn.jsdelivr.net/gh/201206030/CDN/images/default.gif';this.onerror=null"
             :alt="book.bookName"
+            onerror="this.src='default.gif';this.onerror=null"
         /></a>
         <div class="book_info">
           <div class="tit">
@@ -293,7 +293,7 @@
                       ><img
                         :src="`${imgBaseUrl}` + `${item.picUrl}`"
                         :alt="item.bookName"
-                        onerror="this.src='https://cdn.jsdelivr.net/gh/201206030/CDN/images/default.gif';this.onerror=null"
+                        onerror="this.src='default.gif';this.onerror=null"
                     /></a>
                   </div>
                   <div class="dec">

@@ -14,7 +14,7 @@
                 <img
                   :src="`${imgBaseUrl}` + `${item.picUrl}`"
                   :alt="item.bookName"
-                  onerror="this.src='https://cdn.jsdelivr.net/gh/201206030/CDN/images/default.gif';this.onerror=null"
+                  onerror="this.src='default.gif';this.onerror=null"
                 />
               </a>
             </dd>
@@ -29,7 +29,7 @@
                 <img
                   :src="`${imgBaseUrl}` + `${item.picUrl}`"
                   :alt="item.bookName"
-                  onerror="this.src='https://cdn.jsdelivr.net/gh/201206030/CDN/images/default.gif';this.onerror=null"
+                  onerror="this.src='default.gif';this.onerror=null"
                 />
               </li>
             </ul>
@@ -109,7 +109,7 @@
                     ><img
                       :src="`${imgBaseUrl}` + `${item.picUrl}`"
                       :alt="item.bookName"
-                      onerror="this.src='https://cdn.jsdelivr.net/gh/201206030/CDN/images/default.gif';this.onerror=null"
+                      onerror="this.src='default.gif';this.onerror=null"
                   /></a>
                 </div>
                 <a
@@ -138,7 +138,7 @@
             <a class="items_img" href="javascript:void(0)" @click="bookDetail(item.bookId)">
               <img
                 :src="`${imgBaseUrl}` + `${item.picUrl}`"
-                onerror="this.src='https://cdn.jsdelivr.net/gh/201206030/CDN/images/default.gif';this.onerror=null"
+                onerror="this.src='default.gif';this.onerror=null"
                 :alt="item.bookName"
               />
             </a>
@@ -176,7 +176,7 @@
             <a class="items_img" href="javascript:void(0)" @click="bookDetail(item.bookId)">
               <img
                 :src="`${imgBaseUrl}` + `${item.picUrl}`"
-                onerror="this.src='https://cdn.jsdelivr.net/gh/201206030/CDN/images/default.gif';this.onerror=null"
+                onerror="this.src='default.gif';this.onerror=null"
               />
             </a>
             <div class="items_txt">
