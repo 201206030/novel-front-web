@@ -5,7 +5,7 @@ export function listCategorys(params) {
 }
 
 export function searchBooks(params) {
-    return request.get('/book/search_list', { params });
+    return request.get('/search/books', { params });
 }
 
 export function getBookById(bookId) {
