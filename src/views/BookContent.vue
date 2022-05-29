@@ -113,7 +113,7 @@
                 <div
                   id="showReading"
                   class="readBox"
-                  style="font-size: 16px; font-family: microsoft yahei;white-space:pre"
+                  style="font-size: 16px; font-family: microsoft yahei;white-space:break-spaces"
                   v-html="data.bookContent"
                 ></div>
               </div>

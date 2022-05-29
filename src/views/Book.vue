@@ -36,7 +36,7 @@
             </li>
           </ul>
           <div class="intro_txt">
-            <p style="white-space:pre" v-html="book.bookDesc"></p>
+            <p style="white-space:break-spaces" v-html="book.bookDesc"></p>
             <a class="icon_hide" href="javascript:void(0)" onclick=""
               ><i></i>收起</a
             >
