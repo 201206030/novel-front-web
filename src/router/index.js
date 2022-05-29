@@ -67,7 +67,17 @@ const router = createRouter({
       name: 'userSetup',
       component: () => import('@/views/UserSetup')
 	   
-    }
+    },
+    {
+      path: '/author/register',
+      name: 'authorRegister',
+      component: () => import('@/views/author/Register')
+    },
+    {
+      path: '/author/book_list',
+      name: 'authorBookList',
+      component: () => import('@/views/author/BookList')
+    },
   ]
 })
 

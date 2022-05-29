@@ -346,16 +346,13 @@ select {
     padding: 0 25px;
 }
 #head .nav a.topAdd {
-    background: url(../images/top_add.gif) no-repeat 15px top;
     padding-left: 35px;
 }
 #head .nav a:hover, #head .nav a.cur {
     background-color: #5f5f5f;
     color: #FFF;
 }
-#head .nav a.topAdd:hover {
-    background: #60BBFF url(../images/top_add.gif) no-repeat 15px bottom;
-}
+
 #head .nav .noLeft {
     border-left: 0;
 }
@@ -370,9 +367,7 @@ select {
     background-color: #FFF;
     color: #000;
 }
-#head .nav .active a.topAdd {
-    background: #FFF url(../images/top_add.gif) no-repeat 15px top;
-}
+
 #head .nav .drop {
     display: none;
     position: absolute;
@@ -446,9 +441,7 @@ select {
     height: 38px;
     overflow: hidden;
 }
-#menu li.cur {
-    background: #60BBFF url(../images/menu_cur.gif) no-repeat right 50%;
-}
+
 #menu li.cur a {
     color: #FFF;
 }
@@ -458,7 +451,6 @@ select {
     line-height: 38px;
 }
 #menu li i {
-    background: url(../images/icon_menu.png) no-repeat 13px 0;
     float: left;
     display: block;
     width: 42px;
@@ -608,7 +600,6 @@ select {
     font-weight: bold;
 }
 .mainBox h3 .add {
-    background: #28B779 url(../images/action_btn.gif) no-repeat 20px 50%;
     padding-left: 40px;
 }
 .mainBox .filter {
@@ -662,16 +653,12 @@ select {
     position: absolute;
     z-index: 1;
 }
-#maskBox .maskBg i {
-    background: url(../images/icon_picture_big.png) no-repeat;
-}
+
 #maskBox #mask {
     position: absolute;
     z-index: 2;
 }
-#maskBox #mask i {
-    background: url(../images/icon_picture_big.png) no-repeat left bottom;
-}
+
 #maskBox #success {
     background: #60BBFF url();
     display: none;
@@ -727,7 +714,6 @@ select {
 }
 #index .indexBox .ipage a:hover {
     border: 1px dotted #FFFFFF;
-    background: #60BBFF url(../images/icon_edit_white.png) no-repeat 12px 50%;
     color: #FFF;
 }
 /*- help -*/
@@ -854,7 +840,6 @@ select {
     text-align:right;
 }
 #order .btnShow {
-    background: #FFFFFF url(../images/icon_edit_blue.png) no-repeat;
     border: none;
     width:16px;
     height:16px;
@@ -864,7 +849,6 @@ select {
     margin-left:10px;
 }
 #order .btnHide {
-    background: #FFFFFF url(../images/icon_no.png) no-repeat;
     border: none;
     width:14px;
     height:14px;
@@ -879,7 +863,6 @@ select {
 /* 网站管理员
 ----------------------------------------------- */
 #manager .cloudAccount {
-    background: url(../images/icon_cloud_account.png) no-repeat center top;
     text-align:center;
     padding-top:80px;
     margin-top:150px;
@@ -939,7 +922,6 @@ select {
 }
 /*- handle -*/
 #cloud .handle h2 {
-    background:url(../images/icon_cloud_handle.png) no-repeat left top;
     height:46px;
     padding-left:45px;
     font-size:18px;
@@ -955,7 +937,6 @@ select {
 }
 /*- order -*/
 #cloud .order h2 {
-    background:url(../images/icon_cloud_order.png) no-repeat left top;
     height:46px;
     padding-left:45px;
     font-size:18px;
@@ -1014,7 +995,6 @@ select {
     font-size:14px;
 }
 #douFrame .frame h2 .close {
-    background: url(../images/icon_fork.png) no-repeat;
     width:12px;
     height:12px;
     display:block;
@@ -1065,7 +1045,6 @@ select {
     text-decoration:underline;
 }
 #module .uninstall .list h2 {
-    background:url(../images/icon_cloud_uninstall.png) no-repeat left top;
     padding-left:40px;
     height:30px;
     color:#60BBFF;
@@ -1193,7 +1172,6 @@ select {
     margin-left: 120px;
 }
 #mobileBox #mMenu h3 {
-    background:#60BBFF url(../images/icon_mobile.png) no-repeat center 30px;
     color:#FFF;
     font-size:14px;
     font-weight:bold;
@@ -1222,7 +1200,6 @@ select {
     overflow: hidden;
 }
 #login .dologo {
-    background: url(../images/logo.gif) no-repeat 0 0;
     height: 50px;
     margin-bottom: 30px;
 }
@@ -1301,7 +1278,6 @@ select {
 ----------------------------------------------- */
 /*- douMsg -*/
 #douMsg {
-    background: url(../images/icon_exc_small.gif) no-repeat left top;
     padding: 27px 0 0 70px;
     margin-top: 30px;
 }
@@ -1310,9 +1286,7 @@ select {
     font-weight: bold;
     color: #0574C7;
 }
-#douMsg dl {
-    background: url(../images/icon_back_arrow.gif) no-repeat right bottom;
-}
+
 #douMsg dt {
     padding: 10px 0 25px 0;
     font-size: 13px;
@@ -1328,7 +1302,6 @@ select {
 }
 /*- outMsg -*/
 #outMsg {
-    background: url(../images/icon_exc.gif) no-repeat left top;
     margin: 0px auto;
     width: 340px;
     padding: 30px 0 0 80px;
@@ -1345,7 +1318,7 @@ select {
     color: #666666;
 }
 #outMsg dd {
-    background: url(../images/icon_back.gif) no-repeat left top;
+    
     padding-left: 25px;
     font-size: 14px;
 }
