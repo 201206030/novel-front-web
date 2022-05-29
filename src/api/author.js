@@ -11,3 +11,7 @@ export function register(params) {
 export function listBooks() {
     return request.get('/author/books');
 }
+
+export function publishBook(params) {
+    return request.post('/author/book', params);
+}

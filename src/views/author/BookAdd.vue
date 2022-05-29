@@ -4,83 +4,99 @@
     <div class="userBox cf">
       <div class="my_l">
         <ul class="log_list">
-          <li><a class="link_4 on">小说管理</a></li>
+          <li><a class="link_4 on" href="/author/index.html">小说管理</a></li>
+          <!--<li><a class="link_1 " href="/user/userinfo.html">批量小说爬取</a></li>
+<li><a class="link_4 " href="/user/favorites.html">单本小说爬取</a></li>-->
         </ul>
       </div>
       <div class="my_r">
-        <div id="noContentDiv" v-if="total == 0">
-          <div class="tc" style="margin-top: 200px">
-            <router-link :to="{ name: 'authorBookAdd' }" class="btn_red"
-              >创建作品</router-link
-            >
-          </div>
-        </div>
-        <div class="my_bookshelf" id="hasContentDiv" v-if="total > 0">
-          <div class="title cf">
-            <h2 class="fl">小说列表</h2>
-            <div class="fr">
-              <router-link :to="{ name: 'authorBookAdd' }" class="btn_red"
-                >发布小说</router-link
-              >
-            </div>
-          </div>
+        <div class="my_bookshelf">
+          <div class="userBox cf">
+            <form method="post" action="./register.html" id="form2">
+              <div class="user_l">
+                <div></div>
+                <h3>小说基本信息填写</h3>
+                <ul class="log_list">
+                  <li><span id="LabErr"></span></li>
+                  <b>作品方向：</b>
+                  <li>
+                    <select
+                    v-model="book.workDirection"
+                      class="s_input"
+                      id="workDirection"
+                      name="workDirection"
+                      @change="loadCategoryList()"
+                    >
+                      <option value="0">男频</option>
+                      <option value="1">女频</option>
+                    </select>
+                  </li>
+                  <b>分类：</b>
+                  <li>
+                    <select class="s_input" id="catId" name="catId" v-model="book.categoryId" @change="categoryChange">
+                      <option :value="item.id" v-for="(item,index) in bookCategorys" :key="index">{{item.name}}</option>
+                      
+                    </select>
+                  </li>
+                  <input
+                    type="hidden"
+                    id="catName"
+                    name="catName"
+                    value="玄幻奇幻"
+                  />
+                  <b>小说名：</b>
+                  <li>
+                    <input
+                      v-model="book.bookName"
+                      type="text"
+                      id="bookName"
+                      name="bookName"
+                      class="s_input"
+                    />
+                  </li>
+                  <b>小说封面：</b>
+                  <li style="position: relative">
+                    <el-upload
+                      class="avatar-uploader"
+                      :action="baseUrl + '/front/resource/image'"
+                      :show-file-list="false"
+                      :on-success="handleAvatarSuccess"
+                      :before-upload="beforeAvatarUpload"
+                    >
+                      <img
+                        :src="
+                          book.picUrl ? imgBaseUrl + book.picUrl : picUpload
+                        "
+                        class="avatar"
+                      />
+                    </el-upload>
+                  </li>
+                  <b>小说介绍：</b>
 
-          <div id="divData" class="updateTable">
-            <table cellpadding="0" cellspacing="0">
-              <thead>
-                <tr>
-                  <th class="goread">书名</th>
-                  <th class="goread">分类</th>
-                  <th class="goread">点击量</th>
-                  <th class="goread">昨日订阅数</th>
-                  <th class="goread">更新时间</th>
-                  <th class="goread">总字数</th>
-                  <th class="goread">操作</th>
-                </tr>
-              </thead>
-              <tbody id="bookList">
-                <tr
-                  class="book_list"
-                  vals="291"
-                  v-for="(item, index) in books"
-                  :key="index"
-                >
-                  <td style="position: relative" class="goread">
-                    <img
-                      width="50"
-                      height="70"
-                      :src="`${imgBaseUrl}` + `${item.picUrl}`"
-                      :alt="item.bookName"
-                    /><br />
-                    {{ item.bookName }}
-                  </td>
-                  <td class="goread">{{ item.categoryName }}</td>
-                  <td class="goread" valsc="291|2037554|1">
-                    {{ item.visitCount }}
-                  </td>
-                  <td class="goread" valsc="291|2037554|1">0</td>
-                  <td class="goread">{{ item.updateTime }} 更新</td>
-                  <td class="goread" valsc="291|2037554|1">0</td>
-                  <td class="goread" id="opt1431636515973345292">
-                    <a
-                      target="_blank"
-                      class="redBtn"
-                      href="/author/index_list.html?bookId=1431636515973345292"
-                      >章节管理
-                    </a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <el-pagination
-              small
-              layout="prev, pager, next"
-              :background="backgroud"
-              :page-size="pageSize"
-              :total="total"
-              class="mt-4"
-              @current-change="handleCurrentChange"
-            />
+                  <li>
+                    <textarea
+                      v-model="book.bookDesc"
+                      name="bookDesc"
+                      rows="5"
+                      cols="53"
+                      id="bookDesc"
+                      class="textarea"
+                    ></textarea>
+                  </li>
+
+                  <li>
+                    <input
+                      type="button"
+                      @click="saveBook"
+                      name="btnRegister"
+                      value="提交"
+                      id="btnRegister"
+                      class="btn_red"
+                    />
+                  </li>
+                </ul>
+              </div>
+            </form>
           </div>
           <!--<div id="divData" class="updateTable">
                     <table cellpadding="0" cellspacing="0">
@@ -123,10 +139,13 @@
 import "@/assets/styles/book.css";
 import { reactive, toRefs, onMounted, ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { listBooks } from "@/api/author";
+import { ElMessage } from "element-plus";
+import { publishBook } from "@/api/author";
+import { listCategorys } from "@/api/book";
 import AuthorHeader from "@/components/author/Header.vue";
+import picUpload from "@/assets/images/pic_upload.png";
 export default {
-  name: "authorBookList",
+  name: "authorBookAdd",
   components: {
     AuthorHeader,
   },
@@ -135,48 +154,75 @@ export default {
     const router = useRouter();
 
     const state = reactive({
-      books: [],
-      searchCondition: {},
-      backgroud: true,
-      total: 0,
-      pageSize: 10,
+      book: {'workDirection' : 0,'isVip':0},
+      bookCategorys: [],
+      baseUrl: process.env.VUE_APP_BASE_API_URL,
       imgBaseUrl: process.env.VUE_APP_BASE_IMG_URL,
     });
+
     onMounted(() => {
-      load();
-    });
+      loadCategoryList()
+    })
 
-    const load = async () => {
-      const { data } = await listBooks(state.searchCondition);
-      state.books = data.list;
-      state.searchCondition.pageNum = data.pageNum;
-      state.searchCondition.pageSize = data.pageSize;
-      state.total = Number(data.total);
+    const beforeAvatarUpload = (rawFile) => {
+      if (rawFile.type !== "image/jpeg") {
+        ElMessage.error("必须上传 JPG 格式的图片!");
+        return false;
+      } else if (rawFile.size / 1024 / 1024 > 5) {
+        ElMessage.error("图片大小最多 5MB!");
+        return false;
+      }
+      return true;
     };
 
-    const handleCurrentChange = (pageNum) => {
-      state.searchCondition.pageNum = pageNum;
-      load();
+    const handleAvatarSuccess = (response, uploadFile) => {
+      state.book.picUrl = response.data;
     };
+
+    const loadCategoryList = async () => {
+      const { data } = await listCategorys({ workDirection: state.book.workDirection });
+      state.book.categoryId = data[0].id
+      state.book.categoryName = data[0].name
+      state.bookCategorys = data;
+    };
+
+    const categoryChange = async (event) => {
+      console.log("categoryChange======",event.target.value)
+     state.bookCategorys.forEach((category)=>{
+        if(category.id == event.target.value){
+          state.book.categoryName = category.name
+          return
+        }
+      });
+    }
+
+    const saveBook = async () => {
+      console.log("sate=========",state.book)
+      if (!state.book.bookName) {
+        ElMessage.error("书名不能为空！");
+        return;
+      }
+      if (!state.book.picUrl) {
+        ElMessage.error("封面不能为空！");
+        return;
+      }
+      if (!state.book.bookDesc) {
+        ElMessage.error("简介不能为空！");
+        return;
+      }
+      await publishBook(state.book)
+      router.push({'name':'authorBookList'})
+    }
 
     return {
       ...toRefs(state),
-      handleCurrentChange,
-      load,
+      picUpload,
+      beforeAvatarUpload,
+      handleAvatarSuccess,
+      loadCategoryList,
+      categoryChange,
+      saveBook
     };
-  },
-  computed: {
-    wordCountFormat(wordCount) {
-      return (wordCount) => {
-        if (wordCount.length > 5) {
-          return parseInt(wordCount / 10000) + "万";
-        }
-        if (wordCount.length > 4) {
-          return parseInt(wordCount / 1000) + "千";
-        }
-        return wordCount;
-      };
-    },
   },
 };
 </script>
