@@ -82,6 +82,16 @@ const router = createRouter({
       path: '/author/book_add',
       name: 'authorBookAdd',
       component: () => import('@/views/author/BookAdd')
+    },
+    {
+      path: '/author/chapter_list',
+      name: 'authorChapterList',
+      component: () => import('@/views/author/ChapterList')
+    },
+    {
+      path: '/author/chapter_add',
+      name: 'authorChapterAdd',
+      component: () => import('@/views/author/ChapterAdd')
     }
   ]
 })

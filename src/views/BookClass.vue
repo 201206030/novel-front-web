@@ -360,10 +360,10 @@ export default {
   computed: {
     wordCountFormat(wordCount) {
       return (wordCount) => {
-        if (wordCount.length > 5) {
+        if (wordCount.length >= 5) {
           return parseInt(wordCount / 10000) + "万";
         }
-        if (wordCount.length > 4) {
+        if (wordCount.length >= 4) {
           return parseInt(wordCount / 1000) + "千";
         }
         return wordCount;

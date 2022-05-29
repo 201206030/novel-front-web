@@ -4,7 +4,8 @@
     <div class="userBox cf">
       <div class="my_l">
         <ul class="log_list">
-          <li><a class="link_4 on">小说管理</a></li>
+          <li>            <router-link class="link_4 on" :to="{'name':'authorBookList'}">小说管理</router-link>
+</li>
         </ul>
       </div>
       <div class="my_r">
@@ -60,14 +61,10 @@
                   </td>
                   <td class="goread" valsc="291|2037554|1">0</td>
                   <td class="goread">{{ item.updateTime }} 更新</td>
-                  <td class="goread" valsc="291|2037554|1">0</td>
+                  <td class="goread" valsc="291|2037554|1">{{ wordCountFormat(item.wordCount) }}</td>
                   <td class="goread" id="opt1431636515973345292">
-                    <a
-                      target="_blank"
-                      class="redBtn"
-                      href="/author/index_list.html?bookId=1431636515973345292"
-                      >章节管理
-                    </a>
+                    <router-link class="redBtn" :to="{'name':'authorChapterList','query':{'id':item.id}}">章节管理</router-link>
+                    
                   </td>
                 </tr>
               </tbody>
@@ -168,10 +165,10 @@ export default {
   computed: {
     wordCountFormat(wordCount) {
       return (wordCount) => {
-        if (wordCount.length > 5) {
+        if (wordCount.length >= 5) {
           return parseInt(wordCount / 10000) + "万";
         }
-        if (wordCount.length > 4) {
+        if (wordCount.length >= 4) {
           return parseInt(wordCount / 1000) + "千";
         }
         return wordCount;
