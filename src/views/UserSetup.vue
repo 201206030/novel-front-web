@@ -16,13 +16,13 @@
                 <i class="tit">我的头像</i>
                 <el-upload
                   class="avatar-uploader"
-                  :action="baseUrl + '/resource/image'"
+                  :action="baseUrl + '/front/resource/image'"
                   :show-file-list="false"
                   :on-success="handleAvatarSuccess"
                   :before-upload="beforeAvatarUpload"
                 >
                   <img
-                    :src="userPhoto ? uploadImgBaseUrl + userPhoto : man"
+                    :src="userPhoto ? imgBaseUrl + userPhoto : man"
                     class="avatar"
                   />
                 </el-upload>
@@ -32,7 +32,7 @@
                     id="imgLogo"
                     class="user_img"
                     alt="我的头像"
-                    :src="userPhoto ? (uploadImgBaseUrl + userPhoto) : man"
+                    :src="userPhoto ? (imgBaseUrl + userPhoto) : man"
                   />
                   <input
                     class="opacity"
@@ -103,7 +103,7 @@ export default {
       userPhoto: "",
       nickName: "",
       baseUrl: process.env.VUE_APP_BASE_API_URL,
-      uploadImgBaseUrl: process.env.VUE_APP_BASE_UPLOAD_IMG_URL,
+      imgBaseUrl: process.env.VUE_APP_BASE_IMG_URL,
     });
 
     onMounted(async () => {

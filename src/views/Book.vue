@@ -158,7 +158,7 @@
                     <img
                       :src="
                         item.commentUserPhoto
-                          ? uploadImgBaseUrl + item.commentUserPhoto
+                          ? imgBaseUrl + item.commentUserPhoto
                           : man
                       "
                       class="user_head"
@@ -365,7 +365,6 @@ export default {
       commentContent: "",
       newestComments: {},
       imgBaseUrl: process.env.VUE_APP_BASE_IMG_URL,
-      uploadImgBaseUrl: process.env.VUE_APP_BASE_UPLOAD_IMG_URL,
       dialogUpdateCommentFormVisible: false,
       commentId: "",
       updateComment: "",

@@ -7,3 +7,7 @@ export function getAuthorStatus() {
 export function register(params) {
     return request.post('/author/register', params);
 }
+
+export function listBooks() {
+    return request.get('/author/books');
+}
