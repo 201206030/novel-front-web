@@ -33,7 +33,7 @@
             <ul v-for="(item,index) in chapterList" :key="index">
               <li>
                 <a @click="bookContent(book.id,item.id)" href="javascript:void(0)">
-                  <span>{{item.chapterName}}</span><i class="red"> [免费]</i>
+                  <span>{{item.chapterName}}</span><i class="red"> [{{item.isVip == 1 ? '收费' : '免费'}}]</i>
                 </a>
               </li>
             </ul>
