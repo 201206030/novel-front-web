@@ -5,10 +5,10 @@
       <div class="bookCover cf">
         <a class="book_cover">
           <img
+            id="bookCover"
             class="cover"
             :src="`${imgBaseUrl}` + `${book.picUrl}`"
             :alt="book.bookName"
-            onerror="this.src='default.gif';this.onerror=null"
         /></a>
         <div class="book_info">
           <div class="tit">
@@ -155,9 +155,15 @@
                   :key="index"
                 >
                   <div class="user_heads fl" vals="389">
-                    <img :src="item.commentUserPhoto ? uploadImgBaseUrl + item.commentUserPhoto : man"  class="user_head" alt="" /><span
-                      class="user_level1"
-                      style="display: none"
+                    <img
+                      :src="
+                        item.commentUserPhoto
+                          ? uploadImgBaseUrl + item.commentUserPhoto
+                          : man
+                      "
+                      class="user_head"
+                      alt=""
+                    /><span class="user_level1" style="display: none"
                       >见习</span
                     >
                   </div>
@@ -169,10 +175,14 @@
                       ><span class="fr" v-if="item.commentUserId == uid"
                         ><a
                           href="javascript:void(0);"
-                          @click="updateUserComment(item.id,item.commentContent)"
+                          @click="
+                            updateUserComment(item.id, item.commentContent)
+                          "
                           class="zan"
                           >修改</a
-                        > | <a
+                        >
+                        |
+                        <a
                           href="javascript:void(0);"
                           @click="deleteUserComment(item.id)"
                           class="zan"
@@ -187,12 +197,9 @@
                 v-model="dialogUpdateCommentFormVisible"
                 title="评论修改"
               >
-                <el-form >
-                  <el-form-item
-                    label="评论内容"
-                    
-                  >
-                    <el-input type="textarea" v-model="updateComment"/>
+                <el-form>
+                  <el-form-item label="评论内容">
+                    <el-input type="textarea" v-model="updateComment" />
                   </el-form-item>
                 </el-form>
                 <template #footer>
@@ -291,9 +298,9 @@
                   <div class="cover">
                     <a href="javascript:void(0)" @click="bookDetail(item.id)"
                       ><img
+                        :id="'bookCover' + `${index}`"
                         :src="`${imgBaseUrl}` + `${item.picUrl}`"
                         :alt="item.bookName"
-                        onerror="this.src='default.gif';this.onerror=null"
                     /></a>
                   </div>
                   <div class="dec">
@@ -323,7 +330,7 @@
 <script>
 import "@/assets/styles/book.css";
 import man from "@/assets/images/man.png";
-import { reactive, toRefs, onMounted } from "vue";
+import { reactive, toRefs, onMounted, onUpdated } from "vue";
 import { ElMessage } from "element-plus";
 import { useRouter, useRoute } from "vue-router";
 import {
@@ -331,10 +338,10 @@ import {
   addVisitCount,
   getLastChapterAbout,
   listRecBooks,
-  listNewestComments
+  listNewestComments,
 } from "@/api/book";
 import { comment, deleteComment, updateComment } from "@/api/user";
-import {getUid} from "@/utils/auth"
+import { getUid } from "@/utils/auth";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import author_head from "@/assets/images/author_head.png";
@@ -353,7 +360,7 @@ export default {
     const state = reactive({
       uid: getUid(),
       book: {},
-      books: {},
+      books: [],
       chapterAbout: {},
       commentContent: "",
       newestComments: {},
@@ -361,7 +368,7 @@ export default {
       uploadImgBaseUrl: process.env.VUE_APP_BASE_UPLOAD_IMG_URL,
       dialogUpdateCommentFormVisible: false,
       commentId: "",
-      updateComment: ""
+      updateComment: "",
     });
     onMounted(() => {
       const bookId = route.params.id;
@@ -371,9 +378,21 @@ export default {
       loadNewestComments(bookId);
     });
 
+    onUpdated(() => {
+      console.log("onUpdated==========================");
+      for (let i = 0; i < state.books.length; i++) {
+        document
+          .getElementById("bookCover" + i)
+          .setAttribute("onerror", "this.src='default.gif';this.onerror=null");
+      }
+    });
+
     const loadBook = async (bookId) => {
       const { data } = await getBookById(bookId);
       state.book = data;
+      document
+        .getElementById("bookCover")
+        .setAttribute("onerror", "this.src='default.gif';this.onerror=null");
       addBookVisit(bookId);
     };
 
@@ -433,10 +452,10 @@ export default {
       loadNewestComments(state.book.id);
     };
 
-    const updateUserComment = async (id,comment) => {
-      state.dialogUpdateCommentFormVisible = true
-      state.updateComment = comment
-      state.commentId = id
+    const updateUserComment = async (id, comment) => {
+      state.dialogUpdateCommentFormVisible = true;
+      state.updateComment = comment;
+      state.commentId = id;
     };
 
     const deleteUserComment = async (id) => {
@@ -445,8 +464,8 @@ export default {
     };
 
     const goUpdateComment = async (id) => {
-      state.dialogUpdateCommentFormVisible = false
-      await updateComment(state.commentId,{"content":state.updateComment})
+      state.dialogUpdateCommentFormVisible = false;
+      await updateComment(state.commentId, { content: state.updateComment });
       loadNewestComments(state.book.id);
     };
 
@@ -462,7 +481,7 @@ export default {
       deleteUserComment,
       man,
       updateUserComment,
-      goUpdateComment
+      goUpdateComment,
     };
   },
   mounted() {
@@ -492,24 +511,22 @@ export default {
 
 <style>
 .el-button:not(.is-text) {
-    border: #f80;
-    border-color: #f80;
+  border: #f80;
+  border-color: #f80;
 }
 .el-button--primary {
-    --el-button-hover-bg-color: #f80;
+  --el-button-hover-bg-color: #f80;
 }
 
 .el-button--primary {
-    --el-button-bg-color: #f70;
+  --el-button-bg-color: #f70;
 }
 
 .el-button {
-
-    --el-button-hover-text-color: #fafafa;
+  --el-button-hover-text-color: #fafafa;
 }
 
 .el-button {
-
-    --el-button-hover-bg-color: #ff880061;
+  --el-button-hover-bg-color: #ff880061;
 }
 </style>
