@@ -34,7 +34,7 @@ novel 是一套基于时下**最新** Java 技术栈 Spring Boot 3 + Vue 3 开�
 
 - 回复「**笔记**」获取`Spring Boot 3 学习笔记`
 
-![IT进阶](https://youdoc.gitee.io/img/qrcode_for_gh.jpg)
+![xxyopen](https://youdoc.gitee.io/img/qrcode_for_gh.jpg)
 
 ## 赞赏支持
 
