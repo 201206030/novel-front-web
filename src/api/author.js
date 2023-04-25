@@ -27,3 +27,11 @@ export function publishChapter(bookId,params) {
 export function deleteChapter(id) {
     return request.delete(`/author/book/chapter/${id}`);
 }
+
+export function getChapter(id) {
+    return request.get(`/author/book/chapter/${id}`);
+}
+
+export function updateChapter(id,params) {
+    return request.put(`/author/book/chapter/${id}`,params);
+}

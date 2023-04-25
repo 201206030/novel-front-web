@@ -9,87 +9,72 @@
               >小说管理</router-link
             >
           </li>
+          <!--<li><a class="link_1 " href="/user/userinfo.html">批量小说爬取</a></li>
+<li><a class="link_4 " href="/user/favorites.html">单本小说爬取</a></li>-->
         </ul>
       </div>
       <div class="my_r">
-        <div id="noContentDiv" v-if="total == 0">
-          <div class="tc" style="margin-top: 200px">
-            <router-link
-              class="redBtn"
-              :to="{ name: 'authorChapterAdd', query: { id: bookId } }"
-              >章节发布</router-link
-            >
-          </div>
-        </div>
-        <div class="my_bookshelf" id="hasContentDiv" v-if="total > 0">
-          <div class="title cf">
-            <h2 class="fl">章节列表</h2>
-            <div class="fr">
-              <router-link
-                class="redBtn"
-                :to="{ name: 'authorChapterAdd', query: { id: bookId } }"
-                >新建章节</router-link
-              >
-            </div>
-          </div>
+        <div class="my_bookshelf">
+          <div class="userBox cf">
+            <form method="post" action="./register.html" id="form2">
+              <div class="user_l">
+                <div></div>
+                <h3>小说章节内容填写</h3>
+                <ul class="log_list">
+                  <li><span id="LabErr"></span></li>
+                  <b>章节名：</b>
+                  <li>
+                    <input
+                      v-model="chapter.chapterName"
+                      type="text"
+                      id="bookIndex"
+                      name="bookIndex"
+                      class="s_input"
+                    />
+                  </li>
+                  <b>章节内容：</b>
+                  <li id="contentLi">
+                    <textarea
+                      v-model="chapter.chapterContent"
+                      name="bookContent"
+                      rows="30"
+                      cols="80"
+                      id="bookContent"
+                      class="textarea"
+                    ></textarea>
+                  </li>
+                  <br />
 
-          <div id="divData" class="updateTable">
-            <table cellpadding="0" cellspacing="0">
-              <thead>
-                <tr>
-                  <!-- <th class="style">
-                                 序号
-                             </th>-->
-                  <th class="name">章节名</th>
-                  <th class="goread">更新时间</th>
-                  <th class="goread">是否收费</th>
-                  <th class="goread">操作</th>
-                </tr>
-              </thead>
-              <tbody id="bookList">
-                <tr
-                  class="book_list"
-                  vals="291"
-                  v-for="(item, index) in chapters"
-                  :key="index"
-                >
-                  <td id="name1358314029098041344" class="name">
-                    {{ item.chapterName }}
-                  </td>
-                  <td class="goread">{{ item.chapterUpdateTime }}<br />更新</td>
-                  <td class="goread" valsc="291|2037554|1">
-                    {{ item.isVip == 1 ? "收费" : "免费" }}
-                  </td>
+                  <b>是否收费：</b>
+                  <li>
+                    <input
+                      v-model="chapter.isVip"
+                      type="radio"
+                      name="isVip"
+                      value="0"
+                      checked=""
+                    />免费
+                    <input
+                      v-model="chapter.isVip"
+                      type="radio"
+                      name="isVip"
+                      value="1"
+                    />收费
+                  </li>
 
-                  <td class="goread" id="opt1358314029098041344">
-                    <router-link
-                      
-                      :to="{
-                        name: 'authorChapterUpdate',
-                        query: { id: item.id },
-                      }"
-                      >修改</router-link
-                    >
-
-                    <br />
-                    <a
-                      href="javascript:void(0);"
-                      @click="deleteBookChapter(item.id)"
-                      >删除 </a
-                    ><br />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <el-pagination
-              small
-              layout="prev, pager, next"
-              :background="backgroud"
-              :page-size="pageSize"
-              :total="total"
-              class="mt-4"
-              @current-change="handleCurrentChange"
-            />
+                  <li style="margin-top: 10px">
+                    <input
+                      @click="updateBookChapter"
+                      type="button"
+                      name="btnRegister"
+                      value="提交"
+                      id="btnRegister"
+                      class="btn_red"
+                    />
+                  </li>
+                </ul>
+              </div>
+            </form>
           </div>
           <!--<div id="divData" class="updateTable">
                     <table cellpadding="0" cellspacing="0">
@@ -132,10 +117,12 @@
 import "@/assets/styles/book.css";
 import { reactive, toRefs, onMounted, ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { listChapters, deleteChapter } from "@/api/author";
+import { ElMessage } from "element-plus";
+import { updateChapter, getChapter } from "@/api/author";
 import AuthorHeader from "@/components/author/Header.vue";
+import picUpload from "@/assets/images/pic_upload.png";
 export default {
-  name: "authorChapterList",
+  name: "authorChapterUpdate",
   components: {
     AuthorHeader,
   },
@@ -144,41 +131,42 @@ export default {
     const router = useRouter();
 
     const state = reactive({
-      bookId: route.query.id,
-      chapters: [],
-      searchCondition: {},
-      backgroud: true,
-      total: 0,
-      pageSize: 10,
-      imgBaseUrl: process.env.VUE_APP_BASE_IMG_URL,
+      chapterId: route.query.id,
+      chapter: { chapterName: "", chapterContent: "", isVip: 0 },
     });
+
     onMounted(() => {
       load();
     });
 
     const load = async () => {
-      const { data } = await listChapters(state.bookId, state.searchCondition);
-      state.chapters = data.list;
-      state.searchCondition.pageNum = data.pageNum;
-      state.searchCondition.pageSize = data.pageSize;
-      state.total = Number(data.total);
+      const { data } = await getChapter(state.chapterId);
+      state.chapter = data;
     };
 
-    const handleCurrentChange = (pageNum) => {
-      state.searchCondition.pageNum = pageNum;
-      load();
-    };
+    const updateBookChapter = async () => {
+      console.log("sate=========", state.chapter);
+      if (!state.chapter.chapterName) {
+        ElMessage.error("章节名不能为空！");
+        return;
+      }
+      if (!state.chapter.chapterContent) {
+        ElMessage.error("章节内容不能为空！");
+        return;
+      }
 
-    const deleteBookChapter = async (id) => {
-      await deleteChapter(id);
-      load();
+      if (state.chapter.chapterContent.length < 50) {
+        ElMessage.error("章节内容太少！");
+        return;
+      }
+
+      await updateChapter(state.chapterId, state.chapter);
+      ElMessage.success("更新成功！");
     };
 
     return {
       ...toRefs(state),
-      handleCurrentChange,
-      load,
-      deleteBookChapter,
+      updateBookChapter,
     };
   },
 };
