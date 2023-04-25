@@ -81,10 +81,12 @@
 .updateTable td { border-top: 1px solid #eee }
 .updateTable .style { width: 74px; font-size: 14px; }
 .updateTable .name { width: 192px; padding-right: 10px; font-size: 14px; }
+.updateTable td.name { padding-top: 15px; }
 .updateTable .name a, .updateTable .chapter a { max-width: 168px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; word-break: keep-all }
 .updateTable .chapter { padding-right: 5px }
 .updateTable .chapter a { max-width: 200px; float: left; color: #666 }
 .updateTable .author { width: 82px; text-align: left }
+.updateTable td.author { padding-top: 15px; }
 .updateTable .time { width: 82px; text-align: center }
 .updateTable .word { width: 60px; padding-right: 10px; text-align: right }
 .updateTable .rank { width: 2.5em; padding-right: 10px; text-align: center }
