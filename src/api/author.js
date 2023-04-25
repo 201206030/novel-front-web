@@ -23,3 +23,7 @@ export function listChapters(bookId, params) {
 export function publishChapter(bookId,params) {
     return request.post(`/author/book/chapter/${bookId}`, params);
 }
+
+export function deleteChapter(id) {
+    return request.delete(`/author/book/chapter/${id}`);
+}

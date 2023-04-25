@@ -35,7 +35,7 @@
                   <th class="name">章节名</th>
                   <th class="goread">更新时间</th>
                   <th class="goread">是否收费</th>
-                 <!-- <th class="goread">操作</th>-->
+                 <th class="goread">操作</th>
                 </tr>
               </thead>
               <tbody id="bookList">
@@ -46,17 +46,19 @@
                   </td>
                   <td class="goread">{{item.chapterUpdateTime}}<br />更新</td>
                   <td class="goread" valsc="291|2037554|1">{{item.isVip == 1 ? '收费' : '免费'}}</td>
-                  <!--
+                  
                   <td class="goread" id="opt1358314029098041344">
-                    <a
+                    <!-- <a
                       class="redBtn"
                       href='javascript:updateIndex("1358314029098041344",1)'
                       >修改 </a
-                    ><br /><a
-                      href='javascript:deleteIndex("1358314029098041344")'
+                    ><br /> -->
+                    <a href="javascript:void(0);"
+                          @click="deleteBookChapter(item.id)"
+                     
                       >删除 </a
                     ><br />
-                  </td>-->
+                  </td>
                 </tr>
                 
               </tbody>
@@ -112,7 +114,7 @@
 import "@/assets/styles/book.css";
 import { reactive, toRefs, onMounted, ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { listChapters } from "@/api/author";
+import { listChapters ,deleteChapter} from "@/api/author";
 import AuthorHeader from "@/components/author/Header.vue";
 export default {
   name: "authorChapterList",
@@ -149,10 +151,16 @@ export default {
       load();
     };
 
+    const deleteBookChapter = async (id) => {
+      await deleteChapter(id);
+      load();
+    };
+
     return {
       ...toRefs(state),
       handleCurrentChange,
       load,
+      deleteBookChapter
     };
   },
 };
