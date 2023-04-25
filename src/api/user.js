@@ -31,3 +31,7 @@ export function getUserinfo() {
 export function updateUserInfo(userInfo) {
     return request.put('/front/user',userInfo);
 }
+
+export function listComments(params) {
+    return request.get('/front/user/comments', { params });
+}

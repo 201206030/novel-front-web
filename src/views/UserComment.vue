@@ -5,68 +5,33 @@
     <div class="userBox cf">
       <UserMenu />
       <div class="my_r">
-        <div class="my_info cf">
-          <div class="my_info_txt">
-            <ul class="mytab_list">
-              <li>
-                <i class="tit">我的头像</i>
-                <el-upload
-                  class="avatar-uploader"
-                  :action="baseUrl + '/front/resource/image'"
-                  :show-file-list="false"
-                  :on-success="handleAvatarSuccess"
-                  :before-upload="beforeAvatarUpload"
-                >
-                  <img
-                    :src="userPhoto ? imgBaseUrl + userPhoto : man"
-                    class="avatar"
-                  />
-                </el-upload>
-                <!--
-                <a style="position: relative">
-                  <img
-                    id="imgLogo"
-                    class="user_img"
-                    alt="我的头像"
-                    :src="userPhoto ? (imgBaseUrl + userPhoto) : man"
-                  />
-                  <input
-                    class="opacity"
-                    onchange="picChange()"
-                    type="file"
-                    id="file0"
-                    name="file"
-                    title="点击上传图片"
-                    style="
-                      z-index: 100;
-                      cursor: pointer;
-                      left: 0px;
-                      top: -25px;
-                      width: 60px;
-                      height: 80px;
-                      opacity: 0;
-                      position: absolute;
-                    "
-                  />
-                </a>-->
-              </li>
-              <li>
-                <i class="tit">我的昵称</i
-                ><a id="my_name"
-                  >{{ nickName
-                  }}<!--<em class="ml10">[修改]</em>--></a
-                >
-              </li>
-              <li style="display: none">
-                <i class="tit">电子邮箱</i><a href="javascript:void(0);"></a>
-              </li>
-              <li>
-                <i class="tit">我的性别</i
-                ><a id="my_sex">男<!--<em class="ml10">[修改]</em>--></a>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <div class="my_bookshelf">
+                <div class="title cf">
+                    <h2 class="fl">我的书评</h2>
+                    <div class="fr"></div>
+                </div>
+                <div class="bookComment">
+                    <div v-if="total == 0" class="no_contet no_comment" >
+                        您还没有发表过评论！
+                    </div>
+                    <div v-if="total > 0" class="commentBar" id="commentBar">
+                      <div v-for="(item, index) in comments"
+                  :key="index" class="comment_list cf"><div class="user_heads fl" vals="389"><img :src="
+                        imgBaseUrl + item.commentBookPic
+                         
+                      " class="user_head" alt="" onerror="this.src='default.gif';this.onerror=null"><span class="user_level1" style="display: none;">见习</span></div><ul class="pl_bar fr">			<li class="name">{{ item.commentBook }}</li><li class="dec" v-html="item.commentContent"></li><li class="other cf"><span class="time fl">{{ item.commentTime }}</span><span class="fr"><a href="javascript:void(0);" onclick="javascript:BookDetail.AddAgreeTotal(77,this);" class="zan" style="display: none;">赞<i class="num">(0)</i></a></span></li>		</ul>	</div>
+                    </div>
+                </div>
+                <el-pagination v-if="total > 0"
+          small
+          layout="prev, pager, next"
+          :background="backgroud"
+          :page-size="pageSize"
+          :total="total"
+          class="mt-4"
+          @current-change="handleCurrentChange"
+        />
+            </div>
       </div>
     </div>
   </div>
@@ -76,18 +41,14 @@
 <script>
 import "@/assets/styles/user.css";
 import man from "@/assets/images/man.png";
+import { listComments } from '@/api/user'
 import { reactive, toRefs, onMounted, ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { ElMessage } from "element-plus";
-import { Plus } from "@element-plus/icons-vue";
-import { UploadProps } from "element-plus";
-import { getImgVerifyCode } from "@/api/resource";
-import { getUserinfo, updateUserInfo } from "@/api/user";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import UserMenu from "@/components/user/Menu";
 export default {
-  name: "userSetup",
+  name: "userComment",
   components: {
     Header,
     Footer,
@@ -98,45 +59,56 @@ export default {
     const router = useRouter();
 
     const state = reactive({
-      userPhoto: "",
-      nickName: "",
+      total: 0,
+      pageSize: 10,
+      comments:[],
       baseUrl: process.env.VUE_APP_BASE_API_URL,
       imgBaseUrl: process.env.VUE_APP_BASE_IMG_URL,
     });
 
+    const handleCurrentChange = (pageNum) => {
+      
+      loadComments(pageNum);
+    };
+
     onMounted(async () => {
-      const { data } = await getUserinfo();
-      state.userPhoto = data.userPhoto;
-      state.nickName = data.nickName;
+      loadComments(0);
     });
 
-    const beforeAvatarUpload = (rawFile) => {
-      if (rawFile.type !== "image/jpeg") {
-        ElMessage.error("必须上传 JPG 格式的图片!");
-        return false;
-      } else if (rawFile.size / 1024 / 1024 > 5) {
-        ElMessage.error("图片大小最多 5MB!");
-        return false;
-      }
-      return true;
+    const loadComments = async (pageNum) => {
+      const { data } = await listComments({'pageNum':pageNum,'pageSize':state.pageSize});
+      state.comments = data.list;
+      state.total = Number(data.total);
     };
 
-    const handleAvatarSuccess = (response, uploadFile) => {
-      state.userPhoto = response.data;
-      updateUserInfo({ userPhoto: state.userPhoto });
-    };
+    
+    
 
     return {
       ...toRefs(state),
+      handleCurrentChange,
       man,
-      beforeAvatarUpload,
-      handleAvatarSuccess,
+      
     };
   },
 };
 </script>
 
 <style scoped>
+.el-pagination {
+  justify-content: center;
+}
+.el-pagination.is-background .el-pager li:not(.is-disabled).is-active {
+  background-color: #f80 !important;
+}
+.el-pagination {
+  --el-pagination-hover-color: #f80 !important;
+}
+.avatar-uploader .avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
 .avatar-uploader .avatar {
   width: 178px;
   height: 178px;

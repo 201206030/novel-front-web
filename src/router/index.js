@@ -66,6 +66,11 @@ const router = createRouter({
       path: '/user/setup',
       name: 'userSetup',
       component: () => import('@/views/UserSetup')
+    },
+    {
+      path: '/user/comment',
+      name: 'userComment',
+      component: () => import('@/views/UserComment')
 	   
     },
     {
