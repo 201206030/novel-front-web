@@ -25,7 +25,7 @@
                   <b>章节名：</b>
                   <li>
                     <input
-                    v-model="chapter.chapterName"
+                      v-model="chapter.chapterName"
                       type="text"
                       id="bookIndex"
                       name="bookIndex"
@@ -34,26 +34,102 @@
                   </li>
                   <b>章节内容：</b>
                   <li id="contentLi">
+                    <div class="ai-toolbar">
+                      <el-button
+                        v-for="btn in aiButtons"
+                        :key="btn.action"
+                        :type="btn.type"
+                        :disabled="!hasSelection || generating"
+                        @click="openDialog(btn.action)"
+                        size="small"
+                      >
+                        {{ btn.label }}
+                        <el-icon v-if="generating" class="is-loading">
+                          <Loading />
+                        </el-icon>
+                      </el-button>
+
+                      <!-- 参数输入对话框 -->
+                      <el-dialog
+                        v-model="dialogVisible"
+                        :title="dialogTitle"
+                        width="30%"
+                      >
+                        <div
+                          v-if="
+                            currentAction === 'expand' ||
+                            currentAction === 'condense'
+                          "
+                        >
+                          <el-input
+                            v-model.number="ratio"
+                            type="number"
+                            :placeholder="`请输入${
+                              currentAction === 'expand' ? '扩写' : '缩写'
+                            }比例（1-200%）`"
+                            min="1"
+                            max="200"
+                          >
+                            <template #append>%</template>
+                          </el-input>
+                        </div>
+
+                        <div v-if="currentAction === 'continue'">
+                          <el-input
+                            v-model.number="length"
+                            type="number"
+                            placeholder="请输入续写长度（50-1000字）"
+                            min="50"
+                            max="1000"
+                          >
+                            <template #append>字</template>
+                          </el-input>
+                        </div>
+
+                        <template #footer>
+                          <el-button @click="dialogVisible = false"
+                            >取消</el-button
+                          >
+                          <el-button type="primary" @click="confirmParams"
+                            >确定</el-button
+                          >
+                        </template>
+                      </el-dialog>
+                    </div>
                     <textarea
-                    v-model="chapter.chapterContent"
+                      ref="editor"
+                      v-model="chapter.chapterContent"
                       name="bookContent"
                       rows="30"
                       cols="80"
                       id="bookContent"
                       class="textarea"
+                      @mouseup="checkSelection"
+                      @keyup="checkSelection"
                     ></textarea>
                   </li>
                   <br />
 
                   <b>是否收费：</b>
                   <li>
-                    <input v-model="chapter.isVip" type="radio" name="isVip" value="0" checked="" />免费
-                    <input v-model="chapter.isVip" type="radio" name="isVip" value="1" />收费
+                    <input
+                      v-model="chapter.isVip"
+                      type="radio"
+                      name="isVip"
+                      value="0"
+                      checked=""
+                    />免费
+                    <input
+                      v-model="chapter.isVip"
+                      type="radio"
+                      name="isVip"
+                      value="1"
+                    />收费
                   </li>
 
                   <li style="margin-top: 10px">
                     <input
-                    @click="saveChapter"
+                      @click="saveChapter"
                       type="button"
                       name="btnRegister"
                       value="提交"
@@ -104,12 +180,11 @@
 
 <script>
 import "@/assets/styles/book.css";
-import { reactive, toRefs, onMounted, ref } from "vue";
+import { reactive, toRefs, computed, ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { ElMessage } from "element-plus";
-import { publishChapter } from "@/api/author";
+import { ElMessage} from "element-plus";
+import { publishChapter, aiGenerate } from "@/api/author";
 import AuthorHeader from "@/components/author/Header.vue";
-import picUpload from "@/assets/images/pic_upload.png";
 export default {
   name: "authorChapterAdd",
   components: {
@@ -118,11 +193,144 @@ export default {
   setup() {
     const route = useRoute();
     const router = useRouter();
+    const editor = ref(null);
 
     const state = reactive({
       bookId: route.query.id,
       chapter: { chapterName: "", chapterContent: "", isVip: 0 },
+      hasSelection: false,
+      generating: false,
+      selectedText: "",
+      aiButtons: [
+        { label: "AI扩写", action: "expand", type: "primary" },
+        { label: "AI缩写", action: "condense", type: "success" },
+        { label: "AI续写", action: "continue", type: "warning" },
+        { label: "AI润色", action: "polish", type: "danger" },
+      ],
+      dialogVisible: false,
+      currentAction: '',
+      ratio: 30,    // 默认扩写/缩写比例
+      length: 200,  // 默认续写长度
     });
+
+    const dialogTitle = computed(() => {
+      const map = {
+        expand: '扩写设置',
+        condense: '缩写设置',
+        continue: '续写设置',
+        polish: '润色设置'
+      }
+      return map[state.currentAction]
+    })
+
+    const openDialog = (action) => {
+      state.currentAction = action
+      // 润色不需要参数
+      if (action === 'polish') {
+        handleAI(action)
+      } else {
+        state.dialogVisible = true
+      }
+    }
+
+    const validateParams = () => {
+      if (state.currentAction === 'expand') {
+        if (!state.ratio || state.ratio < 110 || state.ratio > 200) {
+          ElMessage.error('请输入110-200%之间的比例')
+          return false
+        }
+      }
+      if (state.currentAction === 'condense') {
+        if (!state.ratio || state.ratio < 1 || state.ratio > 99) {
+          ElMessage.error('请输入1-99%之间的比例')
+          return false
+        }
+      }
+      if (state.currentAction === 'continue') {
+        if (!state.length || state.length < 50 || state.length > 1000) {
+          ElMessage.error('请输入50-1000字之间的长度')
+          return false
+        }
+      }
+      return true
+    }
+
+    const confirmParams = async () => {
+      if (!validateParams()) return
+      
+      state.dialogVisible = false
+      await handleAI(state.currentAction)
+    }
+
+    const getActionName = (action) => {
+      return {
+        expand: `扩写（${state.ratio}%）`,
+        condense: `缩写（${state.ratio}%）`,
+        continue: `续写（${state.length}字）`,
+        polish: '润色'
+      }[action]
+    }
+
+
+    const checkSelection = () => {
+      const textarea = editor.value;
+      if (textarea) {
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        state.hasSelection = start !== end;
+        if (state.hasSelection) {
+          state.selectedText = textarea.value.substring(start, end);
+        }
+      }
+    };
+
+    const typewriterEffect = (text) => {
+      return new Promise((resolve) => {
+        let index = 0;
+        const typing = setInterval(() => {
+          if (index < text.length) {
+            state.chapter.chapterContent += text.charAt(index);
+            index++;
+            // 自动滚动到底部
+            editor.scrollTop = editor.scrollHeight;
+          } else {
+            clearInterval(typing);
+            resolve();
+          }
+        }, 20);
+      });
+    };
+
+    const handleAI = async (action) => {    
+
+      try {
+        state.generating = true
+        
+        const params = {
+          text: state.selectedText
+        }
+
+        // 添加参数
+        if (action === 'expand' || action === 'condense') {
+          params.ratio = state.ratio
+        }
+        if (action === 'continue') {
+          params.length = state.length
+        }
+
+        const response = await aiGenerate(action,params)
+
+        // 在原有内容后追加生成内容，并实现打字效果
+        const newContent = `\n\n【AI生成内容】${response.data}`;
+        state.hasSelection = false;
+        state.selectedText = '';
+        await typewriterEffect(newContent);
+      } catch (error) {
+        ElMessage.error("AI生成失败：" + error.message);
+      } finally {
+        state.generating = false;
+      }
+    };
 
     const saveChapter = async () => {
       console.log("sate=========", state.chapter);
@@ -141,12 +349,19 @@ export default {
       }
 
       await publishChapter(state.bookId, state.chapter);
-      router.push({ name: "authorChapterList", query:{'id':state.bookId} });
+      router.push({ name: "authorChapterList", query: { id: state.bookId } });
     };
 
     return {
       ...toRefs(state),
+      editor,
+      checkSelection,
+      handleAI,
       saveChapter,
+      dialogTitle,
+      openDialog,
+      confirmParams,
+      getActionName
     };
   },
 };
@@ -743,5 +958,29 @@ a.redBtn:hover {
   border-radius: 6px;
   padding: 10px;
   line-height: 1.8;
+}
+
+/* 新增AI工具栏样式 */
+.ai-toolbar {
+  margin-bottom: 10px;
+  width: 500px;
+}
+.ai-toolbar .el-button {
+  margin-right: 10px;
+}
+
+.textarea {
+  position: relative;
+  font-family: "Microsoft YaHei", sans-serif;
+  line-height: 1.6;
+  padding: 10px;
+}
+
+.ai-toolbar .el-input {
+  margin-bottom: 15px;
+}
+
+:deep(.el-dialog__body) {
+  padding: 20px;
 }
 </style>

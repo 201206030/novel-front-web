@@ -24,6 +24,19 @@ export function publishChapter(bookId,params) {
     return request.post(`/author/book/chapter/${bookId}`, params);
 }
 
+export function aiGenerate(action,params) {
+    const formData = new FormData();
+    Object.keys(params).forEach(key => {
+        formData.append(key, params[key]);
+    });
+    return request.post(`/author/ai/${action}`, formData, {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        timeout: 60000
+      });
+}
+
 export function deleteChapter(id) {
     return request.delete(`/author/book/chapter/${id}`);
 }
