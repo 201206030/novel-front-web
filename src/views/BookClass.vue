@@ -152,20 +152,20 @@
             <a
               filter-value="last_index_update_time"
               href="javascript:void(0)"
-              :class="`${sortOn == 'last_chapter_update_time desc' ? 'on' : ''}`"
-              @click="changeSort('last_chapter_update_time desc')"
+              :class="`${sortOn == 'last_chapter_update_time' ? 'on' : ''}`"
+              @click="changeSort('last_chapter_update_time')"
               >更新时间</a
             >
             <a filter-value="word_count" href="javascript:void(0)"
-              :class="`${sortOn == 'word_count desc' ? 'on' : ''}`"
-              @click="changeSort('word_count desc')"
+              :class="`${sortOn == 'word_count' ? 'on' : ''}`"
+              @click="changeSort('word_count')"
               >总字数</a
             >
             <a
               filter-value="visit_count"
               href="javascript:void(0)"
-              :class="`${sortOn == 'visit_count desc' ? 'on' : ''}`"
-              @click="changeSort('visit_count desc')"
+              :class="`${sortOn == 'visit_count' ? 'on' : ''}`"
+              @click="changeSort('visit_count')"
               >点击量</a
             >
           </li>
