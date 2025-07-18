@@ -43,7 +43,7 @@ axios.interceptors.response.use(res => {
 }, error => {
   ElMessage.error('网络异常！')
   console.log(error)
-  Promise.reject(error)
+  return Promise.reject(error)
 })
 
 export default axios
