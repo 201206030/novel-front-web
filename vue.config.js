@@ -5,6 +5,9 @@ module.exports = defineConfig({
     // 端口号的配置
 		port:1024  
 	},
+  css: {
+    sourceMap: true // 开启 CSS source map
+  },
   transpileDependencies: true,
   lintOnSave: false,
   configureWebpack: {
